@@ -6,8 +6,8 @@ from pyrogram.enums import ParseMode
 from Oneforall import app
 from Oneforall.mongo import db
 
-STATS_COLL = db.quiz_stats
-CHATS_COLL = db.chats
+STATS_COLL = mongodb.quiz_stats
+CHATS_COLL = mongodb.chats
 
 # 🎥 VIDEO + IMAGE (Catbox URLs)
 LEADERBOARD_VIDEO = "https://files.catbox.moe/dtcr9p.mp4"  # YOUR VIDEO
