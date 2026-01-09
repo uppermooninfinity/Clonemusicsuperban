@@ -10,7 +10,7 @@ from pyrogram.types import (
     CallbackQuery,
     Message,
 )
-from TEAMZYRO import app  # your bot client
+from Oneforall import app  # your bot client
 # If you want to persist notify list or sticker_map to DB, I can add that later.
 
 # ---------------- CONFIG ----------------
