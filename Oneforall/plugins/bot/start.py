@@ -29,35 +29,31 @@ from Oneforall.misc import SUDOERS
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     await message.react("❤")
-        # 1️⃣ Send initial animation message
-    accha = await message.reply_text("ꨄ︎ ѕ")  # initial text
+        # ===== START ANIMATION =====
+    accha = await message.reply_text("ꨄ︎ ѕ")  # initial message for animation
 
-    # 2️⃣ Animation sequence
-    text_sequence = [
-        "ꨄ︎ ѕ",
-        "ꨄ sт",
-        "ꨄ︎ ѕтα",
-        "ꨄ︎ ѕтαя",
-        "ꨄ sтαят",
-        "ꨄ︎ sтαятι",
-        "ꨄ︎ sтαятιи",
-        "ꨄ sтαятιиg",
-        "ꨄ︎ ѕтαятιиg."
-    ]
-    dots = ["", ".", "..", "..."]
-
-    # animate main text
-    for txt in text_sequence:
-        await accha.edit(txt)
-        await asyncio.sleep(0.05)
-
-    # animate dots
-    for i in range(4):
-        await accha.edit(f"{text_sequence[-1][:-1]}{dots[i]}")
-        await asyncio.sleep(0.1)
-
-    # 3️⃣ Delete the animation message
-    await accha.delete()
+    await asyncio.sleep(0.5)
+    await accha.edit("ꨄ sт")
+    await asyncio.sleep(0.01)
+    await accha.edit("ꨄ︎ ѕтα")
+    await asyncio.sleep(0.01)
+    await accha.edit("ꨄ︎ ѕтαя")
+    await asyncio.sleep(0.01)
+    await accha.edit("ꨄ sтαят")
+    await asyncio.sleep(0.01)
+    await accha.edit("ꨄ︎ sтαятι")
+    await asyncio.sleep(0.01)
+    await accha.edit("ꨄ︎ sтαятιи")
+    await asyncio.sleep(0.01)
+    await accha.edit("ꨄ sтαятιиg")
+    await asyncio.sleep(0.01)
+    await accha.edit("ꨄ︎ ѕтαятιиg.")
+    await asyncio.sleep(0.1)
+    await accha.edit("ꨄ sтαятιиg.....")
+    await asyncio.sleep(0.1)
+    await accha.edit("ꨄ︎ ѕтαятιиg.")
+    await asyncio.sleep(0.1)
+    await accha.edit("ꨄ sтαятed.....")
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
