@@ -21,7 +21,7 @@ from Oneforall.utils.extraction import extract_user
 
 
 # 🔹 CATBOX GBAN VIDEO
-GBAN_VIDEO = "https://files.catbox.moe/yourvideo.mp4"
+GBAN_VIDEO = "https://files.catbox.moe/1dpz9p.mp4"
 
 
 @app.on_message(filters.command(["gban", "globalban"]) & SUDOERS)
