@@ -348,33 +348,49 @@ class Call(PyTgCalls):
                 autoend[chat_id] = datetime.now() + timedelta(minutes=1)
 
     async def change_stream(self, client, chat_id):
-        check = db.get(chat_id)
-        popped = None
-        loop = await get_loop(chat_id)
+    check = db.get(chat_id)
+    popped = None
+    loop = await get_loop(chat_id)
+    try:
+        if loop == 0:
+            popped = check.pop(0)
+        else:
+            loop = loop - 1
+            await set_loop(chat_id, loop)
+
+        await auto_clean(popped)
+
+        if not check:
+            language = await get_lang(chat_id)
+            _ = get_string(language)
+
+            buttons = InlineKeyboardMarkup(
+                [
+                    [
+                        {
+                            "text": "➕ Add Me",
+                            "url": f"https://t.me/{app.username}?startgroup=true",
+                        }
+                    ]
+                ]
+            )
+
+            await app.send_message(
+                chat_id,
+                "🎵 𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ.\n"
+                "𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs!!",
+                reply_markup=buttons,
+            )
+
+            await _clear_(chat_id)
+            return await client.leave_group_call(chat_id)
+
+    except:
         try:
-            if loop == 0:
-                popped = check.pop(0)
-            else:
-                loop = loop - 1
-                await set_loop(chat_id, loop)
-            await auto_clean(popped)
-            if not check:
-    language = await get_lang(chat_id)
-    _ = get_string(language)
-
-    buttons = InlineKeyboardMarkup(
-        [
-                {"text": "➕ Add Me", "url": f"https://t.me/{app.username}?startgroup=true"}
-        ]
-    )
-
-    await app.send_message(
-        chat_id,
-        "🎵 𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ.\n"
-        "𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs!!",
-        reply_markup=buttons,
-    )
-
+            await _clear_(chat_id)
+            return await client.leave_group_call(chat_id)
+        except:
+            return
     await _clear_(chat_id)
     return await client.leave_group_call(chat_id)
         except:
