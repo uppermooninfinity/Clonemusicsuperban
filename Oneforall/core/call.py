@@ -382,6 +382,7 @@ class Call(PyTgCalls):
                     "🎵 𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ.\n"
                     "𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs!!",
                     reply_markup=buttons,
+                )
             await _clear_(chat_id)
             return await client.leave_group_call(chat_id)
     except:
