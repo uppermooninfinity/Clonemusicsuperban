@@ -6,7 +6,7 @@ from collections import defaultdict
 # =======================
 # Game and leaderboard storage
 # =======================
-games = {}  # {chat_id: {game_id: game_data}}
+games = {}  # {chat_id: game_data}
 leaderboard = defaultdict(lambda: defaultdict(int))  # {chat_id: {user_id: wins}}
 
 # =======================
@@ -30,7 +30,7 @@ def check_winner(board):
         return board[0][2]
     return None
 
-def build_keyboard(board, game_id):
+def build_keyboard(board):
     """Build inline keyboard for the board"""
     buttons = []
     for i in range(3):
@@ -38,7 +38,7 @@ def build_keyboard(board, game_id):
         for j in range(3):
             cell = board[i][j]
             text = " " if cell == "" else cell
-            row.append(InlineKeyboardButton(text=text, callback_data=f"{game_id}:{i}:{j}"))
+            row.append(InlineKeyboardButton(text=text, callback_data=f"{i}:{j}"))
         buttons.append(row)
     return InlineKeyboardMarkup(buttons)
 
@@ -47,89 +47,114 @@ def build_keyboard(board, game_id):
 # =======================
 @Client.on_message(filters.command("tictactoe") & filters.group)
 async def start_game(client: Client, message: Message):
-    """Start a new game by replying to a user's message"""
-    if not message.reply_to_message:
-        return await message.reply_text("Reply to a user's message to challenge them! Example: /tictactoe")
+    """Start a new game where anyone can join"""
+    chat_id = message.chat.id
+    if chat_id in games:
+        return await message.reply_text("A game is already running! Click 'Join' to participate.")
 
-    player1 = message.from_user
-    player2 = message.reply_to_message.from_user
-    game_id = message.message_id  # unique per game
-
-    board = [["" for _ in range(3)] for _ in range(3)]
-    chat_games = games.setdefault(message.chat.id, {})
-    chat_games[game_id] = {
-        "board": board,
-        "players": [player1, player2],
-        "turn": 0
+    games[chat_id] = {
+        "board": [["" for _ in range(3)] for _ in range(3)],
+        "players": [],
+        "turn": 0,
+        "started": False
     }
 
+    join_button = InlineKeyboardMarkup(
+        [[InlineKeyboardButton("✅ Join Game", callback_data="join_game")]]
+    )
+
     await message.reply_text(
-        f"Tic Tac Toe started!\n{player1.mention} vs {player2.mention}\n"
-        f"Turn: {player1.mention} (❌)\n\n{render_board(board)}",
-        reply_markup=build_keyboard(board, game_id)
+        "Tic Tac Toe started! Click ✅ to join the game (2 players required).",
+        reply_markup=join_button
     )
 
 @Client.on_callback_query()
-async def button_click(client: Client, callback_query: CallbackQuery):
-    """Handle button presses"""
-    data = callback_query.data.split(":")
-    if len(data) != 3:
-        return
-    game_id, i, j = data
-    i, j = int(i), int(j)
+async def handle_buttons(client: Client, callback_query: CallbackQuery):
     chat_id = callback_query.message.chat.id
+    game = games.get(chat_id)
 
-    chat_games = games.get(chat_id)
-    if not chat_games or int(game_id) not in chat_games:
-        return await callback_query.answer("This game no longer exists.", show_alert=True)
+    if not game:
+        return await callback_query.answer("No game in progress.", show_alert=True)
 
-    game = chat_games[int(game_id)]
-    board = game["board"]
-    players = game["players"]
-    turn = game["turn"]
-    current_player = players[turn]
+    user_id = callback_query.from_user.id
+    user_mention = callback_query.from_user.mention
 
-    if callback_query.from_user.id != current_player.id:
-        return await callback_query.answer("Not your turn!", show_alert=True)
+    # ===== Joining the game =====
+    if callback_query.data == "join_game":
+        if user_id in [p.id for p in game["players"]]:
+            return await callback_query.answer("You already joined!", show_alert=True)
+        if len(game["players"]) >= 2:
+            return await callback_query.answer("Game already has 2 players!", show_alert=True)
 
-    if board[i][j] != "":
-        return await callback_query.answer("Cell already taken!", show_alert=True)
+        game["players"].append(callback_query.from_user)
+        if len(game["players"]) < 2:
+            await callback_query.answer(f"{user_mention} joined! Waiting for another player...")
+            await callback_query.message.edit_text(
+                f"Tic Tac Toe waiting for players...\n"
+                f"{len(game['players'])}/2 joined.",
+                reply_markup=callback_query.message.reply_markup
+            )
+            return
+        else:
+            game["started"] = True
+            board_text = render_board(game["board"])
+            await callback_query.message.edit_text(
+                f"Game started!\n"
+                f"{game['players'][0].mention} (❌) vs {game['players'][1].mention} (⭕)\n"
+                f"Turn: {game['players'][0].mention} (❌)\n\n{board_text}",
+                reply_markup=build_keyboard(game["board"])
+            )
+            return await callback_query.answer("Game started!")
 
-    board[i][j] = "X" if turn == 0 else "O"
+    # ===== Playing the game =====
+    if ":" in callback_query.data and game["started"]:
+        i, j = map(int, callback_query.data.split(":"))
+        board = game["board"]
+        players = game["players"]
+        turn = game["turn"]
+        current_player = players[turn]
 
-    winner_symbol = check_winner(board)
-    if winner_symbol:
-        winner = current_player
-        leaderboard[chat_id][winner.id] += 1
+        if user_id != current_player.id:
+            return await callback_query.answer("Not your turn!", show_alert=True)
+        if board[i][j] != "":
+            return await callback_query.answer("Cell already taken!", show_alert=True)
+
+        board[i][j] = "X" if turn == 0 else "O"
+
+        winner_symbol = check_winner(board)
+        if winner_symbol:
+            winner = current_player
+            leaderboard[chat_id][winner.id] += 1
+            await callback_query.message.edit_text(
+                f"🏆 Game Over! {winner.mention} ({winner_symbol}) won!\n\n{render_board(board)}",
+                reply_markup=None
+            )
+            del games[chat_id]
+            return
+
+        if all(cell != "" for row in board for cell in row):
+            await callback_query.message.edit_text(
+                f"🤝 Game Over! It's a draw!\n\n{render_board(board)}",
+                reply_markup=None
+            )
+            del games[chat_id]
+            return
+
+        # Switch turn
+        game["turn"] = 1 - turn
+        next_player = players[game["turn"]]
 
         await callback_query.message.edit_text(
-            f"🏆 Game Over! {winner.mention} ({winner_symbol}) won!\n\n{render_board(board)}",
-            reply_markup=None
+            f"Turn: {next_player.mention} ({'❌' if game['turn']==0 else '⭕'})\n\n{render_board(board)}",
+            reply_markup=build_keyboard(board["board"])
         )
-        del chat_games[int(game_id)]
-        return
+        return await callback_query.answer()
 
-    if all(cell != "" for row in board for cell in row):
-        await callback_query.message.edit_text(
-            f"🤝 Game Over! It's a draw!\n\n{render_board(board)}",
-            reply_markup=None
-        )
-        del chat_games[int(game_id)]
-        return
-
-    # Switch turn
-    game["turn"] = 1 - turn
-    next_player = players[game["turn"]]
-
-    await callback_query.message.edit_text(
-        f"Turn: {next_player.mention} ({'❌' if game['turn']==0 else '⭕'})\n\n{render_board(board)}",
-        reply_markup=build_keyboard(board, game_id)
-    )
-    await callback_query.answer()
-
+# =======================
+# Leaderboard command
+# =======================
 @Client.on_message(filters.command("ticlead") & filters.group)
 async def show_leaderboard(client: Client, message: Message):
-    """Show leaderboard of wins in this group"""
     chat_id = message.chat.id
     if chat_id not in leaderboard or not leaderboard[chat_id]:
         return await message.reply_text("No games played yet!")
