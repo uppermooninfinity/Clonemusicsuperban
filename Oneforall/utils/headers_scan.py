@@ -72,4 +72,6 @@ def scan_https_tls(domain: str) -> dict:
     except Exception:
         pass
 
-    return inform 
+    return info
+
+
