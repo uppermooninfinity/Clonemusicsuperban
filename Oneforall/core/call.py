@@ -406,11 +406,12 @@ class Call(PyTgCalls):
                         "🎵 𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs!!",
                         reply_markup=buttons,
                     )
-                except:
-                    pass
                 return await client.leave_call(chat_id, close=False)
-            except Exception:
-        else:
+
+              except Exception as e:
+               pass
+
+             else:
             queued = check[0]["file"]
             language = await get_lang(chat_id)
             _ = get_string(language)
