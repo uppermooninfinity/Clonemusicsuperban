@@ -347,7 +347,10 @@ class Call(PyTgCalls):
             if users == 1:
                 autoend[chat_id] = datetime.now() + timedelta(minutes=1)
 
-    async def change_stream(self, client, chat_id):
+    
+    @capture_internal_err
+    async def change_stream(self, client: PyTgCalls, chat_id: int):
+        await delete_old_message(chat_id)
         check = db.get(chat_id)
         popped = None
         loop = await get_loop(chat_id)
@@ -360,13 +363,54 @@ class Call(PyTgCalls):
             await auto_clean(popped)
             if not check:
                 await _clear_(chat_id)
-                return await client.leave_group_call(chat_id)
-        except:
+                try:
+                    buttons = InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    "✙ ʌᴅᴅ ϻє вᴧʙʏ ✙",
+                                    url=f"https://t.me/{app.username}?startgroup=true",
+                                ),
+                                InlineKeyboardButton(
+                                    "⋞ ᴄʟᴏsє ⋟", callback_data="close_message"
+                                ),
+                            ]
+                        ]
+                    )
+                    await app.send_message(
+                        chat_id,
+                        "🎵 𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs!!",
+                        reply_markup=buttons,
+                    )
+                except:
+                    pass
+                return await client.leave_call(chat_id, close=False)
+        except Exception:
             try:
                 await _clear_(chat_id)
-                return await client.leave_group_call(chat_id)
-            except:
-                return
+                try:
+                    buttons = InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    "✙ ʌᴅᴅ ϻє вᴧʙʏ ✙",
+                                    url=f"https://t.me/{app.username}?startgroup=true",
+                                ),
+                                InlineKeyboardButton(
+                                    "⋞ ᴄʟᴏsє ⋟", callback_data="close_message"
+                                ),
+                            ]
+                        ]
+                    )
+                    await app.send_message(
+                        chat_id,
+                        "🎵 𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs!!",
+                        reply_markup=buttons,
+                    )
+                except:
+                    pass
+                return await client.leave_call(chat_id, close=False)
+            except Exception:
         else:
             queued = check[0]["file"]
             language = await get_lang(chat_id)
