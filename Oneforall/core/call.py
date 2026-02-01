@@ -347,8 +347,7 @@ class Call(PyTgCalls):
             if users == 1:
                 autoend[chat_id] = datetime.now() + timedelta(minutes=1)
 
-    
-    @capture_internal_err
+
     async def change_stream(self, client: PyTgCalls, chat_id: int):
         await delete_old_message(chat_id)
         check = db.get(chat_id)
