@@ -27,7 +27,10 @@ MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "Infinity_X_Destiny_Bot")
 PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", None)
 
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 100000))
-
+UPSTREAM_REPO = getenv(
+    "UPSTREAM_REPO",
+    "https://github.com/izarjuna1/roshu",
+)
 # ===== LOGGER (REHNE DO) =====
 
 LOGGER_ID = int(getenv("LOGGER_ID", "-1002869205475"))
