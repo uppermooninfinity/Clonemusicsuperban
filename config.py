@@ -17,6 +17,7 @@ API_HASH = getenv("API_HASH", "d818b8d530e4a9b209509815ab1b9c7c")
 
 BOT_TOKEN = getenv("BOT_TOKEN", "")
 OPENAI_API_KEY = getenv("OPENAI_API_KEY")
+GIT_TOKEN = getenv("GIT_TOKEN", None)
 
 MONGO_DB_URI = getenv(
     "MONGO_DB_URI",
