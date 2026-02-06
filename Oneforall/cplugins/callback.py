@@ -8,13 +8,13 @@ from pyrogram.errors import (
     UserNotParticipant,
 )
 import config
-from Clonify.utils.database import get_assistant
+from Oneforall.utils.database import get_assistant
 from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
-from Clonify import YouTube, app
-from Clonify.core.call import PRO
-from Clonify.misc import SUDOERS, db
-from Clonify.utils.database import (
+from Oneforall import YouTube, app
+from Oneforall.core.call import Hotty
+from Oneforall.misc import SUDOERS, db
+from Oneforall.utils.database import (
     get_active_chats,
     get_lang,
     get_upvote_count,
@@ -28,9 +28,9 @@ from Clonify.utils.database import (
     is_muted,
     set_loop,
 )
-from Clonify.utils.decorators.language import languageCB
-from Clonify.utils.formatters import seconds_to_min
-from Clonify.utils.inline import (
+from Oneforall.utils.decorators.language import languageCB
+from Oneforall.utils.formatters import seconds_to_min
+from Oneforall.utils.inline import (
     close_markup,
     stream_markup,
     stream_markup_timer,
@@ -52,8 +52,8 @@ from Clonify.utils.inline import (
     queue_markup,
     panel_markup_1,
 )
-from Clonify.utils.stream.autoclear import auto_clean
-from Clonify.utils.thumbnails import get_thumb
+from Oneforall.utils.stream.autoclear import auto_clean
+from Oneforall.utils.thumbnails import get_thumb
 from config import (
     BANNED_USERS,
     SOUNCLOUD_IMG_URL,
@@ -66,7 +66,7 @@ from config import (
 )
 from strings import get_string
 from config import lyrical
-from Clonify.utils.database.clonedb import get_owner_id_from_db, get_cloned_support_chat, get_cloned_support_channel
+from Oneforall.utils.database.clonedb import get_owner_id_from_db, get_cloned_support_chat, get_cloned_support_channel
 
 wrong = {}
 
@@ -276,7 +276,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                 [
                     [
                         InlineKeyboardButton(
-                            text=f"👍 {get_upvotes}",
+                            text=f"⏫ {get_upvotes}",
                             callback_data=f"ADMIN  UpVote|{chat_id}_{counter}",
                         )
                     ]
@@ -301,14 +301,14 @@ async def del_back_playlist(client, CallbackQuery, _):
             return await CallbackQuery.answer(_["admin_1"], show_alert=True)
         await CallbackQuery.answer()
         await music_off(chat_id)
-        await PRO.pause_stream(chat_id)
+        await Hotty.pause_stream(chat_id)
         buttons = [
             [
                 InlineKeyboardButton(
-                    text="ʀᴇsᴜᴍᴇ", callback_data=f"ADMIN Resume|{chat_id}"
+                    text="ʀєꜱᴜϻє 🎶", callback_data=f"ADMIN Resume|{chat_id}"
                 ),
                 InlineKeyboardButton(
-                    text="ʀᴇᴘʟᴀʏ", callback_data=f"ADMIN Replay|{chat_id}"
+                    text="ʀєᴘʟᴧʏ 🎶", callback_data=f"ADMIN Replay|{chat_id}"
                 ),
             ],
         ]
@@ -320,19 +320,19 @@ async def del_back_playlist(client, CallbackQuery, _):
             return await CallbackQuery.answer(_["admin_3"], show_alert=True)
         await CallbackQuery.answer()
         await music_on(chat_id)
-        await PRO.resume_stream(chat_id)
+        await Hotty.resume_stream(chat_id)
         buttons_resume = [
             [
                 InlineKeyboardButton(
-                    text="sᴋɪᴘ", callback_data=f"ADMIN Skip|{chat_id}"
+                    text="🥀sᴋɪᴘ🥀", callback_data=f"ADMIN Skip|{chat_id}"
                 ),
                 InlineKeyboardButton(
-                    text="sᴛᴏᴘ", callback_data=f"ADMIN Stop|{chat_id}"
+                    text="♻️ꜱᴛσᴘ♻️", callback_data=f"ADMIN Stop|{chat_id}"
                 ),
             ],
             [
                 InlineKeyboardButton(
-                    text="ᴘᴀᴜsᴇ",
+                    text="🔸ᴘᴀᴜsᴇ🔸",
                     callback_data=f"ADMIN Pause|{chat_id}",
                 ),
             ],
@@ -344,7 +344,7 @@ async def del_back_playlist(client, CallbackQuery, _):
         )
     elif command == "Stop" or command == "End":
         await CallbackQuery.answer()
-        await PRO.stop_stream(chat_id)
+        await Hotty.stop_stream(chat_id)
         await set_loop(chat_id, 0)
         await CallbackQuery.message.reply_text(
             _["admin_5"].format(mention), reply_markup=close_markup(_)
@@ -355,14 +355,14 @@ async def del_back_playlist(client, CallbackQuery, _):
             return await CallbackQuery.answer(_["admin_45"], show_alert=True)
         await CallbackQuery.answer()
         await mute_on(chat_id)
-        await PRO.mute_stream(chat_id)
+        await Hotty.mute_stream(chat_id)
         await CallbackQuery.message.reply_text(_["admin_46"].format(mention))
     elif command == "Unmute":
         if not await is_muted(chat_id):
             return await CallbackQuery.answer(_["admin_47"], show_alert=True)
         await CallbackQuery.answer()
         await mute_off(chat_id)
-        await PRO.unmute_stream(chat_id)
+        await Hotty.unmute_stream(chat_id)
         await CallbackQuery.message.reply_text(_["admin_48"].format(mention))
     elif command == "Loop":
         await CallbackQuery.answer()
@@ -387,7 +387,7 @@ async def del_back_playlist(client, CallbackQuery, _):
     elif command == "Skip" or command == "Replay":
         check = db.get(chat_id)
         if command == "Skip":
-            txt = f"➻ sᴛʀᴇᴀᴍ sᴋɪᴩᴩᴇᴅ 🎄\n│ \n└ʙʏ : {mention} 🥀"
+            txt = f"✦ ꜱᴛʀєᴧϻ ꜱᴋɪᴩᴩєᴅ ⏭️\n│ \n└ʙʏ : {mention} 🩷"
             popped = None
             try:
                 popped = check.pop(0)
@@ -395,7 +395,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                     await auto_clean(popped)
                 if not check:
                     await CallbackQuery.edit_message_text(
-                        f"➻ sᴛʀᴇᴀᴍ sᴋɪᴩᴩᴇᴅ 🎄\n│ \n└ʙʏ : {mention} 🥀"
+                        f"❍ꜱᴛʀєᴧϻ ꜱᴋɪᴩᴩєᴅ ⚡\n│ \n└ʙʏ : {mention} ❤️‍🩹"
                     )
                     await CallbackQuery.message.reply_text(
                         text=_["admin_6"].format(
@@ -404,7 +404,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                         reply_markup=close_markup(_),
                     )
                     try:
-                        return await PRO.stop_stream(chat_id)
+                        return await Hotty.stop_stream(chat_id)
                     except:
                         return
             except:
@@ -418,7 +418,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                         ),
                         reply_markup=close_markup(_),
                     )
-                    return await PRO.stop_stream(chat_id)
+                    return await Hotty.stop_stream(chat_id)
                 except:
                     return
         else:
@@ -450,7 +450,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             except:
                 image = None
             try:
-                await PRO.skip_stream(chat_id, link, video=status, image=image)
+                await Hotty.skip_stream(chat_id, link, video=status, image=image)
             except:
                 return await CallbackQuery.message.reply_text(_["call_6"])
             button = stream_markup2(_, chat_id)
@@ -486,7 +486,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             except:
                 image = None
             try:
-                await PRO.skip_stream(chat_id, file_path, video=status, image=image)
+                await Hotty.skip_stream(chat_id, file_path, video=status, image=image)
             except:
                 return await mystic.edit_text(_["call_6"])
             button = stream_markup(_, chat_id)
@@ -507,7 +507,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             await mystic.delete()
         elif "index_" in queued:
             try:
-                await PRO.skip_stream(chat_id, videoid, video=status)
+                await Hotty.skip_stream(chat_id, videoid, video=status)
             except:
                 return await CallbackQuery.message.reply_text(_["call_6"])
             button = stream_markup2(_, chat_id)
@@ -530,7 +530,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                 except:
                     image = None
             try:
-                await PRO.skip_stream(chat_id, queued, video=status, image=image)
+                await Hotty.skip_stream(chat_id, queued, video=status, image=image)
             except:
                 return await CallbackQuery.message.reply_text(_["call_6"])
             if videoid == "telegram":
