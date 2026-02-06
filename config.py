@@ -52,9 +52,9 @@ STORAGE_CHANNEL_ID = -1003132769250
 AUTHORS = [7651303468]
 
 #--------------------------------
-String_client_1 = ""
-String_client_2 = ""
-String_client_3 = ""
+STRING_SESSION1= ""
+STRING_SESSION2 = ""
+STRING_SESSION3 = ""
 Mustjoin = "dark_musictm"
 
 #--------------------------------
