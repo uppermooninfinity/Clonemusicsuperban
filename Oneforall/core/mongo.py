@@ -23,6 +23,12 @@ if config.MONGO_DB_URI is None:
     temp_client.stop()
     _mongo_async_ = _mongo_client_(TEMP_MONGODB)
     _mongo_sync_ = MongoClient(TEMP_MONGODB)
+    group_log_db = db["group_logs"]
+    global_userinfo_db = db["user_info"]
+    register_data_db = db["register_data"]
+    session_db = db["session_data"]
+    user_states_collection = db["user_states"]
+    video_channels_collection = db["video_channels"]
     mongodb = _mongo_async_[username]
     pymongodb = _mongo_sync_[username]
 else:
