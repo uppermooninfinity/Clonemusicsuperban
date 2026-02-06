@@ -2,14 +2,14 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram import filters, Client
-from Clonify import app
-from Clonify.misc import SUDOERS
+from Oneforall import app
+from Oneforall.misc import SUDOERS
 from Clonify.utils.decorators.language import language
 
-from Clonify.utils.database.clonedb import get_owner_id_from_db, get_cloned_support_chat, get_cloned_support_channel, check_bot_premium
+from Oneforall.utils.database.clonedb import get_owner_id_from_db, get_cloned_support_chat, get_cloned_support_channel, check_bot_premium
 from config import SUPPORT_CHAT, OWNER_ID
 
-from Clonify.utils.database import clonebotdb
+from Oneforall.utils.database import clonebotdb
 
 
 #set clone bot support channel
