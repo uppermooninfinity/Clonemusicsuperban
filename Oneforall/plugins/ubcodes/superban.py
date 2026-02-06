@@ -22,11 +22,11 @@ from config import (
     AUTHORS
 )
 
-from Superban import app
-from Superban.core.mongo import group_log_db
-import Superban.core.userbot as userbot_module
-from Superban.core.readable_time import get_readable_time
-from Superban.core.chat_tracker import verify_all_groups_from_db
+from Oneforall import app
+from Oneforall.core.mongo import group_log_db
+import Oneforall.core.userbot as userbot_module
+from Oneforall.core.readable_time import get_readable_time
+from Oneforall.core.chat_tracker import verify_all_groups_from_db
 
 reason_storage = {}
 next_reason_id = 1
