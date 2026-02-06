@@ -1,7 +1,7 @@
 from pyrogram import filters, Client
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from Oneforall import app
-from Oneforall.core.call import PRO
+from Oneforall.core.call import Hotty
 from Oneforall.utils.decorators import AdminRightsCheck
 from Oneforall.utils.inline import close_markup
 from config import BANNED_USERS
@@ -79,15 +79,15 @@ async def music_off(chat_id: int):
 async def pause_admin(cli, message: Message, _, chat_id):
 
     await music_off(chat_id)
-    await PRO.pause_stream(chat_id)
+    await Hotty.pause_stream(chat_id)
 
     buttons = [
         [
             InlineKeyboardButton(
-                text="ʀᴇsᴜᴍᴇ", callback_data=f"ADMIN Resume|{chat_id}"
+                text="🏓 ʀᴇsᴜᴍᴇ 🌐", callback_data=f"ADMIN Resume|{chat_id}"
             ),
             InlineKeyboardButton(
-                text="ʀᴇᴘʟᴀʏ", callback_data=f"ADMIN Replay|{chat_id}"
+                text="↩️ ʀᴇᴘʟᴀʏ ↩️", callback_data=f"ADMIN Replay|{chat_id}"
             ),
         ],
     ]
