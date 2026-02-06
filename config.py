@@ -21,10 +21,10 @@ GIT_TOKEN = getenv("GIT_TOKEN", None)
 
 MONGO_DB_URI = getenv(
     "MONGO_DB_URI",
-    "mongodb+srv://knight4563:knight4563@cluster0.a5br0se.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    ""
 )
 
-MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "Infinity_X_Destiny_Bot")
+MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "")
 PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", None)
 
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 100000))
@@ -45,6 +45,214 @@ SUDO_USERS = getenv("SUDO_USERS", "7487670897")
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 
+# superban section 
+
+SUPERBAN_CHAT_ID = -1003228624224
+STORAGE_CHANNEL_ID = -1003132769250
+AUTHORS = [7651303468]
+
+#--------------------------------
+String_client_1 = ""
+String_client_2 = ""
+String_client_3 = ""
+Mustjoin = "dark_musictm"
+
+#--------------------------------
+SUPERBAN_REQUEST_TEMPLATE = """ᴀᴘᴘʀᴏᴠᴇ sᴜᴘᴇʀʙᴀɴ ꜰᴏʀ ᴜꜱᴇʀ :
+{user_first}
+ᴜꜱᴇʀ ɪᴅ : {user_id}
+
+ʀᴇQᴜᴇꜱᴛ ꜰʀᴏᴍ ᴄʜᴀᴛ ɪᴅ : {chat_id}
+ʀᴇQᴜᴇꜱᴛ ꜰʀᴏᴍ ᴄʜᴀᴛ ɴᴀᴍᴇ : {chat_name}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ʀᴇQᴜᴇꜱᴛ ʙʏ : {request_by}
+
+ᴅᴀᴛᴇ & ᴛɪᴍᴇ : {ind_time}
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+
+SUPERBAN_REQUEST_RESPONSE = """ʏᴏᴜʀ sᴜᴘᴇʀʙᴀɴ ʀᴇQᴜᴇꜱᴛ ʜᴀꜱ ʙᴇᴇɴ ꜱᴇɴᴅᴇᴅ ᴛᴏ ᴛᴇᴀᴍ
+
+ʀᴇQᴜᴇꜱᴛ ᴛᴏ sᴜᴘᴇʀʙᴀɴ
+ᴜꜱᴇʀ : {user_first}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ʀᴇQᴜᴇꜱᴛ ʙʏ : {request_by}
+
+ʏᴏᴜʀ ʀᴇQᴜᴇꜱᴛ ᴡɪʟʟ ʙᴇ ᴄʜᴇᴄᴋᴇᴅ ᴀɴᴅ ɪꜰ ɪᴛ'ꜱ ɢᴇɴᴜɪɴ ᴛʜᴇɴ ʙᴇ ꜱᴜʀᴇ ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴘᴘʀᴏᴠᴇᴅ.
+ᴛʜᴀɴᴋꜜs ꜰᴏʀ ʏᴏᴜʀ sᴜᴘᴇʀʙᴀɴ ʀᴇQᴜᴇꜱᴛ
+
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ : @snowy_hometown
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+
+SUPERBAN_APPROVED_TEMPLATE = """ʏᴏᴜʀ sᴜᴘᴇʀʙᴀɴ ʀᴇQᴜᴇꜱᴛ ʜᴀꜱ ʙᴇᴇɴ ᴀᴘᴘʀᴏᴠᴇᴅ, ɴᴏᴡ ꜱᴛᴀʀᴛɪɴɢ sᴜᴘᴇʀʙᴀɴ.....
+
+ʀᴇQᴜᴇꜱᴛ ᴛᴏ sᴜᴘᴇʀʙᴀɴ
+ᴜꜱᴇʀ : {user_first}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ᴀᴘᴘʀᴏᴠᴇᴅ ʙʏ ᴀᴜᴛʜᴏʀ : {approval_author}
+
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+
+SUPERBAN_DECLINED_TEMPLATE = """ʏᴏᴜʀ sᴜᴘᴇʀʙᴀɴ ʀᴇQᴜᴇꜱᴛ ʜᴀꜱ ʙᴇᴇɴ ᴅᴇᴄʟɪɴᴇᴅ
+
+ʀᴇQᴜᴇꜱᴛ ᴛᴏ sᴜᴘᴇʀʙᴀɴ
+ᴜꜱᴇʀ : {user_first}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ᴅᴇᴄʟɪɴᴇᴅ ʙʏ ᴀᴜᴛʜᴏʀ : {approval_author}
+
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+
+SUPERBAN_COMPLETE_TEMPLATE = """sᴜᴘᴇʀʙᴀɴ ɪꜱ ᴄᴏᴍᴘʟᴇᴛᴇᴅ.
+
+ᴜꜱᴇʀ : {user_first}
+ᴜꜱᴇʀ ɪᴅ : {user_id}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ᴛᴏᴛᴀʟ ʙᴀɴ ɪɴ ꜰᴇᴅꜱ : {fed_count}
+ɢʙᴀɴ ɪɴ : {extra_bans}
+
+ᴀᴘᴘʀᴏᴠᴇᴅ ʙʏ : {approval_author}
+
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+ᴛɪᴍᴇ ᴛᴀᴋᴇɴ : {time_taken}
+
+ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ : @snowy_hometown
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+
+#--------------------------------
+SUPERUNBAN_REQUEST_TEMPLATE = """ᴀᴘᴘʀᴏᴠᴇ sᴜᴘᴇʀᴜɴʙᴀɴ ꜰᴏʀ ᴜꜱᴇʀ :
+{user_first}
+ᴜꜱᴇʀ ɪᴅ : {user_id}
+
+ʀᴇQᴜᴇꜱᴛ ꜰʀᴏᴍ ᴄʜᴀᴛ ɪᴅ : {chat_id}
+ʀᴇQᴜᴇꜱᴛ ꜰʀᴏᴍ ᴄʜᴀᴛ ɴᴀᴍᴇ : {chat_name}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ʀᴇQᴜᴇꜱᴛ ʙʏ : {request_by}
+
+ᴅᴀᴛᴇ & ᴛɪᴍᴇ : {ind_time}
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+
+SUPERUNBAN_REQUEST_RESPONSE = """ʏᴏᴜʀ sᴜᴘᴇʀᴜɴʙᴀɴ ʀᴇQᴜᴇꜱᴛ ʜᴀꜱ ʙᴇᴇɴ ꜱᴇɴᴅᴇᴅ ᴛᴏ ᴛᴇᴀᴍ
+
+ʀᴇQᴜᴇꜱᴛ ᴛᴏ sᴜᴘᴇʀᴜɴʙᴀɴ
+ᴜꜱᴇʀ : {user_first}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ʀᴇQᴜᴇꜱᴛ ʙʏ : {request_by}
+
+ʏᴏᴜʀ ʀᴇQᴜᴇꜱᴛ ᴡɪʟʟ ʙᴇ ᴄʜᴇᴄᴋᴇᴅ ᴀɴᴅ ɪꜰ ɪᴛ'ꜱ ɢᴇɴᴜɪɴ ᴛʜᴇɴ ʙᴇ ꜱᴜʀᴇ ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴘᴘʀᴏᴠᴇᴅ.
+ᴛʜᴀɴᴋꜜs ꜰᴏʀ ʏᴏᴜʀ sᴜᴘᴇʀᴜɴʙᴀɴ ʀᴇQᴜᴇꜱᴛ
+
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ : @snowy_hometown
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+
+SUPERUNBAN_APPROVED_TEMPLATE = """ʏᴏᴜʀ sᴜᴘᴇʀᴜɴʙᴀɴ ʀᴇQᴜᴇꜱᴛ ʜᴀꜱ ʙᴇᴇɴ ᴀᴘᴘʀᴏᴠᴇᴅ, ɴᴏᴡ ꜱᴛᴀʀᴛɪɴɢ sᴜᴘᴇʀᴜɴʙᴀɴ.....
+
+ʀᴇQᴜᴇꜱᴛ ᴛᴏ sᴜᴘᴇʀᴜɴʙᴀɴ
+ᴜꜱᴇʀ : {user_first}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ᴀᴘᴘʀᴏᴠᴇᴅ ʙʏ ᴀᴜᴛʜᴏʀ : {approval_author}
+
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+
+SUPERUNBAN_DECLINED_TEMPLATE = """ʏᴏᴜʀ sᴜᴘᴇʀᴜɴʙᴀɴ ʀᴇQᴜᴇꜱᴛ ʜᴀꜱ ʙᴇᴇɴ ᴅᴇᴄʟɪɴᴇᴅ
+
+ʀᴇQᴜᴇꜱᴛ ᴛᴏ sᴜᴘᴇʀᴜɴʙᴀɴ
+ᴜꜱᴇʀ : {user_first}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ᴅᴇᴄʟɪɴᴇᴅ ʙʏ ᴀᴜᴛʜᴏʀ : {approval_author}
+
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+
+SUPERUNBAN_COMPLETE_TEMPLATE = """sᴜᴘᴇʀᴜɴʙᴀɴ ɪꜱ ᴄᴏᴍᴘʟᴇᴛᴇᴅ.
+
+ᴜꜱᴇʀ : {user_first}
+ᴜꜱᴇʀ ɪᴅ : {user_id}
+
+ʀᴇᴀꜱᴏɴ : {reason}
+ᴛᴏᴛᴀʟ ᴜɴʙᴀɴ ɪɴ ꜰᴇᴅꜱ : {fed_count}
+ɢᴜɴʙᴀɴ ɪɴ : {extra_bans}
+
+ᴀᴘᴘʀᴏᴠᴇᴅ ʙʏ : {approval_author}
+
+ᴜɴɪᴠᴇʀꜱᴀʟ ᴛɪᴍᴇ : {utc_time}
+ᴛɪᴍᴇ ᴛᴀᴋᴇɴ : {time_taken}
+
+ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ : @snowy_hometown
+ᴘᴏᴡᴇʀᴇᴅ ʙʏ : @dark_musictm"""
+#--------------------------------
+CLIENT_CHAT_DATA = [
+    {
+        "STRING_SESSION1": SESSION_STRING1,
+        "chat_ids": [-1003228624224],
+        "messages": [
+            "/Joinfed 1111-aaaa",
+            "/fban {user_id} {reason} \n\nApproved by {approver} \nTime: {utc_time}"
+        ]
+    },
+    {
+        "STRING_SESSION2": SESSION_STRING2,
+        "chat_ids": [-1003228624224],
+        "messages": [
+            "/Joinfed 2222-bbbb",
+            "/fban {user_id} Reason: {reason} \n\nDone by {approver}"
+        ]
+    },
+    {
+        "STRING_SESSION3": SESSION_STRING3,
+        "chat_ids": [-1003228624224],
+        "messages": [
+            "/Joinfed 3333-cccc",
+            "Ban user {user_id} - Reason: {reason} - By: {approver}"
+        ]
+    },
+]
+
+#--------------------------------
+CLIENT_CHAT_DATA2 = [
+    {
+        "STRING_SESSION1": String_client_1,
+        "chat_ids": [-1003228624224],
+        "messages": [
+            "/Joinfed 1111-aaaa",
+            "/fban {user_id} {reason} \n\nApproved by {approver} \nTime: {utc_time}"
+        ]
+    },
+    {
+        "STRING_SESSION2": String_client_2,
+        "chat_ids": [-1003228624224],
+        "messages": [
+            "/Joinfed 2222-bbbb",
+            "/fban {user_id} Reason: {reason} \n\nDone by {approver}"
+        ]
+    },
+    {
+        "STRING_SESSION3": String_client_3,
+        "chat_ids": [-1003228624224],
+        "messages": [
+            "/Joinfed 3333-cccc",
+            "Ban user {user_id} - Reason: {reason} - By: {approver}"
+        ]
+    },
+]
+
+#--------------------------------
 # ===== SUPPORT =====
 
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/dark_musictm")
