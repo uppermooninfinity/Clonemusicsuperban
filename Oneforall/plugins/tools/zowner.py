@@ -17,7 +17,7 @@ async def help(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        "ƨσʋяcɛ", url=f"https://github.com/Gokukhan1/musicgoku/fork"
+                        "ƨσʋяcɛ", url=f"https://t.me/snowy_hometown"
                     )
                 ]
             ]
@@ -34,7 +34,7 @@ async def clones(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        "ƨσʋяcɛ", url=f"https://github.com/Gokukhan1/musicgoku/fork"
+                        "ƨσʋяcɛ", url=f"https://t.me/snowy_hometown"
                     )
                 ]
             ]
