@@ -52,7 +52,8 @@ STORAGE_CHANNEL_ID = -1003132769250
 AUTHORS = [7651303468]
 
 #--------------------------------
-STRING_SESSION1= ""
+STRING_SESSION = ""
+STRING_SESSION1 = ""
 STRING_SESSION2 = ""
 STRING_SESSION3 = ""
 Mustjoin = "snowy_hometown"
@@ -199,7 +200,7 @@ SUPERUNBAN_COMPLETE_TEMPLATE = """sᴜᴘᴇʀᴜɴʙᴀɴ ɪꜱ ᴄᴏᴍᴘʟ�
 #--------------------------------
 CLIENT_CHAT_DATA = [
     {
-        "STRING_SESSION1": SESSION_STRING1,
+        "STRING_SESSION": SESSION_STRING,
         "chat_ids": [-1003228624224],
         "messages": [
             "/Joinfed 1111-aaaa",
@@ -207,13 +208,22 @@ CLIENT_CHAT_DATA = [
         ]
     },
     {
-        "STRING_SESSION2": SESSION_STRING2,
+        "STRING_SESSION1": SESSION_STRING1,
         "chat_ids": [-1003228624224],
         "messages": [
             "/Joinfed 2222-bbbb",
             "/fban {user_id} Reason: {reason} \n\nDone by {approver}"
         ]
     },
+    {
+        "STRING_SESSION2": SESSION_STRING2,
+        "chat_ids": [-1003228624224],
+        "messages": [
+            "/Joinfed 3333-cccc",
+            "Ban user {user_id} - Reason: {reason} - By: {approver}"
+        ]
+    },
+    
     {
         "STRING_SESSION3": SESSION_STRING3,
         "chat_ids": [-1003228624224],
@@ -227,7 +237,7 @@ CLIENT_CHAT_DATA = [
 #--------------------------------
 CLIENT_CHAT_DATA2 = [
     {
-        "STRING_SESSION1": SESSION_STRING1,
+        "STRING_SESSION": SESSION_STRING,
         "chat_ids": [-1003228624224],
         "messages": [
             "/Joinfed 1111-aaaa",
@@ -235,11 +245,19 @@ CLIENT_CHAT_DATA2 = [
         ]
     },
     {
-        "STRING_SESSION2": SESSION_STRING2,
+        "STRING_SESSION1": SESSION_STRING1,
         "chat_ids": [-1003228624224],
         "messages": [
             "/Joinfed 2222-bbbb",
             "/fban {user_id} Reason: {reason} \n\nDone by {approver}"
+        ]
+    },
+    {
+        "STRING_SESSION2": SESSION_STRING2,
+        "chat_ids": [-1003228624224],
+        "messages": [
+            "/Joinfed 3333-cccc",
+            "Ban user {user_id} - Reason: {reason} - By: {approver}"
         ]
     },
     {
