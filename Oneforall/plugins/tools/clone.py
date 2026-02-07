@@ -7,34 +7,33 @@ from datetime import datetime
 from pyrogram import Client, filters
 from pyrogram.errors import AccessTokenExpired, AccessTokenInvalid
 
-from Clonify import app, userbot
-from Clonify.misc import SUDOERS
-from Clonify.utils.decorators.language import language
-from Clonify.utils.database.clonedb import (
+from Oneforall import app, userbot
+from Oneforall.misc import SUDOERS
+from Oneforall.utils.decorators.language import language
+from Oneforall.utils.database.clonedb import (
     clonebotdb,
     has_user_cloned_any_bot,
     get_owner_id_from_db,
 )
-from Clonify.utils.player import play_music
+from Oneforall.utils.player import play_music
 
 from config import (
     API_ID,
     API_HASH,
     OWNER_ID,
-    STRING_SESSION,
     SUPPORT_CHAT,
     CLONE_LOGGER,
 )
 
 log = logging.getLogger(__name__)
-CLONES = set()
+CLONES: set[int] = set()
 
 # ===================== CONSTANTS ===================== #
 
 C_BOT_DESC = (
-    "Wᴀɴᴛ ᴀ ʙᴏᴛ ʟɪᴋᴇ ᴛʜɪs? Cʟᴏɴᴇ ɪᴛ ɴᴏᴡ! ✅\n\n"
-    "Vɪsɪᴛ: @Destiny_Infinity_Og\n"
-    "Sᴜᴘᴘᴏʀᴛ: @Cuties_logs"
+    "🩷Wᴀɴᴛ ᴀ ʙᴏᴛ ʟɪᴋᴇ ᴛʜɪs? Cʟᴏɴᴇ ɪᴛ ɴᴏᴡ! ✅\n\n"
+    "🔍Vɪsɪᴛ: @superban_probot\n"
+    "📽️Sᴜᴘᴘᴏʀᴛ: @snowy_hometown"
 )
 
 C_BOT_COMMANDS = [
@@ -46,6 +45,13 @@ C_BOT_COMMANDS = [
     {"command": "skip", "description": "Skip track"},
     {"command": "end", "description": "End stream"},
     {"command": "ping", "description": "Ping bot"},
+    {"command": "waifu", "description": "spawn a waifu pic in your chat"},
+    {"command": "ban", "description": "ban a user in your chat"},
+    {"command": "afk", "description": "you can go afk in chat"},
+    {"command": "tts", "description": "enter a text and convert it to speech"}, 
+    {"command": "slap", "description": "slap someone"},
+    {"command": "lick", "description": "lick someone"},
+    
 ]
 
 # ===================== SAFE CLIENT ===================== #
@@ -73,17 +79,20 @@ async def clone_bot(_, message, _t):
     if len(message.command) < 2:
         return await message.reply_text(_t["C_B_H_1"])
 
-    bot_token = message.command[1]
+    bot_token = message.command[1].strip()
     msg = await message.reply_text(_t["C_B_H_2"])
 
+    temp = build_clone_client(0, bot_token)
+
     try:
-        temp = build_clone_client(0, bot_token)
         await temp.start()
         bot = await temp.get_me()
     except (AccessTokenExpired, AccessTokenInvalid):
         return await msg.edit_text(_t["C_B_H_3"])
     except Exception as e:
         return await msg.edit_text(f"❌ `{e}`")
+    finally:
+        await temp.stop()
 
     clonebotdb.insert_one(
         {
@@ -98,43 +107,47 @@ async def clone_bot(_, message, _t):
 
     CLONES.add(bot.id)
 
-    requests.post(
-        f"https://api.telegram.org/bot{bot_token}/setMyCommands",
-        json={"commands": C_BOT_COMMANDS},
-    )
-
-    requests.post(
-        f"https://api.telegram.org/bot{bot_token}/setMyDescription",
-        data={"description": C_BOT_DESC},
-    )
+    try:
+        requests.post(
+            f"https://api.telegram.org/bot{bot_token}/setMyCommands",
+            json={"commands": C_BOT_COMMANDS},
+            timeout=10,
+        )
+        requests.post(
+            f"https://api.telegram.org/bot{bot_token}/setMyDescription",
+            data={"description": C_BOT_DESC},
+            timeout=10,
+        )
+    except Exception as e:
+        log.warning(f"Command setup failed: {e}")
 
     await app.send_message(
         CLONE_LOGGER,
-        f"🤖 **New Clone Created**\n\n"
-        f"Bot: @{bot.username}\n"
-        f"Owner: [{message.from_user.first_name}](tg://user?id={user_id})",
+        f"🩷 ηєᴡ ᴄʟσηє ᴄʀєᴧᴛєᴅ 🥀\n\n"
+        f"ʙσᴛ: @{bot.username}\n"
+        f"σᴡηєʀ: [{message.from_user.first_name}](tg://user?id={user_id})",
     )
 
     await msg.edit_text(_t["C_B_H_6"].format(bot.username))
 
 # ===================== CLONE PLAY ===================== #
 
-@app.on_message(filters.command("play"))
-async def clone_play(client, message):
+@app.on_message(filters.command("play") & filters.group)
+async def clone_play(_, message):
     if len(message.command) < 2:
         return await message.reply_text("❌ Give a song name")
 
-    query = " ".join(message.command[1:])
-    chat_id = message.chat.id
-
-    await message.reply_text("🎵 Playing via main server...")
-
-    await play_music(
-        userbot=userbot,
-        chat_id=chat_id,
-        query=query,
-        requested_by=message.from_user.id,
-    )
+    try:
+        await message.reply_text("❖ ᴘʟᴧʏɪηɢ ꜱσϻєᴛʜɪηɢ ʙєᴧᴜᴛɪғᴜʟ ғσʀ ʏσᴜ 💗")
+        await play_music(
+            userbot=userbot,
+            chat_id=message.chat.id,
+            query=" ".join(message.command[1:]),
+            requested_by=message.from_user.id,
+        )
+    except Exception as e:
+        log.error(f"Play failed: {e}")
+        await message.reply_text("❌ Failed to play track.")
 
 # ===================== DELETE CLONE ===================== #
 
@@ -153,8 +166,10 @@ async def delete_clone(_, message, _t):
         return await message.reply_text(_t["C_B_H_11"])
 
     owner = get_owner_id_from_db(bot["bot_id"])
-    if message.from_user.id not in [OWNER_ID, owner]:
-        return await message.reply_text(_t["NOT_C_OWNER"].format(SUPPORT_CHAT))
+    if message.from_user.id not in (OWNER_ID, owner):
+        return await message.reply_text(
+            _t["NOT_C_OWNER"].format(SUPPORT_CHAT)
+        )
 
     clonebotdb.delete_one({"_id": bot["_id"]})
     CLONES.discard(bot["bot_id"])
@@ -174,7 +189,7 @@ async def restart_bots():
             CLONES.add(me.id)
             await asyncio.sleep(1)
         except Exception as e:
-            log.error(f"Clone skipped: {e}")
+            log.error(f"Clone skipped ({bot.get('username')}): {e}")
 
     await app.send_message(CLONE_LOGGER, "✅ All cloned bots restarted.")
 
@@ -188,7 +203,7 @@ async def my_bots(_, message, _t):
     if not bots:
         return await message.reply_text(_t["C_B_H_16"])
 
-    text = f"❄️ʏσᴜʀ ᴄʟσηєᴅ ʙσᴛꜱ ({len(bots)}):**\n\n"
+    text = f"❄️ ʏσᴜʀ ᴄʟσηєᴅ ʙσᴛꜱ ({len(bots)}):\n\n"
     for b in bots:
         text += f"• @{b['username']}\n"
 
@@ -201,7 +216,7 @@ async def my_bots(_, message, _t):
 async def list_all_clones(_, message, _t):
     bots = list(clonebotdb.find())
 
-    text = f"☘️ᴛσᴛᴧʟ ᴄʟσηєᴅ:** `{len(bots)}`\n\n"
+    text = f"☘️ ᴛσᴛᴧʟ ᴄʟσηєᴅ: `{len(bots)}`\n\n"
     for b in bots:
         text += f"• @{b['username']} (`{b['bot_id']}`)\n"
 
