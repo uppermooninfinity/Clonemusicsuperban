@@ -52,6 +52,9 @@ AUTHORS = [7651303468]
 STRING1 = getenv("STRING_SESSION", "")
 STRING2 = getenv("STRING_SESSION2", None)
 STRING3 = getenv("STRING_SESSION3", None)
+STRING4 = getenv("STRING_SESSION4", None)
+STRING5 = getenv("STRING_SESSION5", None)
+
 Mustjoin = "snowy_hometown"
 
 #--------------------------------
@@ -145,6 +148,24 @@ CLIENT_CHAT_DATA = [
             "/fban {user_id} Reason: {reason}"
         ]
     }
+    {
+        "session": STRING3,
+        "chat_ids": [SUPERBAN_CHAT_ID],
+        "messages": [
+            "/Joinfed 3333-cccc",
+            "/fban {user_id} {reason}"]},
+    {
+        "session": STRING4,
+        "chat_ids": [SUPERBAN_CHAT_ID],
+        "messages": [
+            "/Joinfed 4444-dddd",
+            "/fban {user_id} {reason}"]},
+    {
+        "session": STRING5,
+        "chat_ids": [SUPERBAN_CHAT_ID],
+        "messages": [
+            "/Joinfed 5555-eeee",
+            "/fban {user_id} {reason}"]},
 ]
 
 # UNBAN DATA
