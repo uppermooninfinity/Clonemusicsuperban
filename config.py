@@ -214,6 +214,16 @@ SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/snowy_hometown")
 
 START_IMG_URL = getenv("START_IMG_URL", "https://files.catbox.moe/hmr8t9.jpg")
 PING_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+PLAYLIST_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+STATS_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+TELEGRAM_AUDIO_URL = "https://files.catbox.moe/hmr8t9.jpg"
+TELEGRAM_VIDEO_URL = "https://files.catbox.moe/hmr8t9.jpg"
+STREAM_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+SOUNCLOUD_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+YOUTUBE_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+SPOTIFY_ARTIST_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+SPOTIFY_ALBUM_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+SPOTIFY_PLAYLIST_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
 # ... (Baaki links same rahenge)
 
 #--------------------------------
