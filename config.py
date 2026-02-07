@@ -55,7 +55,7 @@ AUTHORS = [7651303468]
 STRING_SESSION1= ""
 STRING_SESSION2 = ""
 STRING_SESSION3 = ""
-Mustjoin = "dark_musictm"
+Mustjoin = "snowy_hometown"
 
 #--------------------------------
 SUPERBAN_REQUEST_TEMPLATE = """ᴀᴘᴘʀᴏᴠᴇ sᴜᴘᴇʀʙᴀɴ ꜰᴏʀ ᴜꜱᴇʀ :
@@ -227,7 +227,7 @@ CLIENT_CHAT_DATA = [
 #--------------------------------
 CLIENT_CHAT_DATA2 = [
     {
-        "STRING_SESSION1": String_client_1,
+        "STRING_SESSION1": SESSION_STRING1,
         "chat_ids": [-1003228624224],
         "messages": [
             "/Joinfed 1111-aaaa",
@@ -235,7 +235,7 @@ CLIENT_CHAT_DATA2 = [
         ]
     },
     {
-        "STRING_SESSION2": String_client_2,
+        "STRING_SESSION2": SESSION_STRING2,
         "chat_ids": [-1003228624224],
         "messages": [
             "/Joinfed 2222-bbbb",
@@ -243,7 +243,7 @@ CLIENT_CHAT_DATA2 = [
         ]
     },
     {
-        "STRING_SESSION3": String_client_3,
+        "STRING_SESSION3": SESSION_STRING3,
         "chat_ids": [-1003228624224],
         "messages": [
             "/Joinfed 3333-cccc",
