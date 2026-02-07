@@ -30,7 +30,7 @@ PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", None)
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 100000))
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/izarjuna1/roshu",
+    "https://github.com/uppermooninfinity/clonemusicsuperban",
 )
 # ===== LOGGER (REHNE DO) =====
 
@@ -260,18 +260,18 @@ SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/snowy_hometown")
 
 # ===== IMAGES (REHNE DO BHAI 😄) =====
 
-START_IMG_URL = getenv("START_IMG_URL", "https://files.catbox.moe/r2toj2.jpg")
-PING_IMG_URL = START_IMG_URL
-PLAYLIST_IMG_URL = START_IMG_URL
-STATS_IMG_URL = START_IMG_URL
-TELEGRAM_AUDIO_URL = START_IMG_URL
-TELEGRAM_VIDEO_URL = START_IMG_URL
-STREAM_IMG_URL = START_IMG_URL
-SOUNCLOUD_IMG_URL = START_IMG_URL
-YOUTUBE_IMG_URL = START_IMG_URL
-SPOTIFY_ARTIST_IMG_URL = START_IMG_URL
-SPOTIFY_ALBUM_IMG_URL = START_IMG_URL
-SPOTIFY_PLAYLIST_IMG_URL = START_IMG_URL
+START_IMG_URL = getenv("START_IMG_URL", "https://files.catbox.moe/hmr8t9.jpg")
+PING_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+PLAYLIST_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+STATS_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+TELEGRAM_AUDIO_URL = "https://files.catbox.moe/hmr8t9.jpg"
+TELEGRAM_VIDEO_URL = "https://files.catbox.moe/hmr8t9.jpg"
+STREAM_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+SOUNCLOUD_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+YOUTUBE_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+SPOTIFY_ARTIST_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+SPOTIFY_ALBUM_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+SPOTIFY_PLAYLIST_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
 
 # ===== FUNCTIONS =====
 
