@@ -153,19 +153,25 @@ CLIENT_CHAT_DATA = [
         "chat_ids": [SUPERBAN_CHAT_ID],
         "messages": [
             "/Joinfed 3333-cccc",
-            "/fban {user_id} {reason}"]},
+            "/fban {user_id} Reason: {reason}"
+        ]
+    },
     {
         "session": STRING4,
         "chat_ids": [SUPERBAN_CHAT_ID],
         "messages": [
             "/Joinfed 4444-dddd",
-            "/fban {user_id} {reason}"]},
+            "/fban {user_id} Reason: {reason}"
+        ]
+    },
     {
         "session": STRING5,
         "chat_ids": [SUPERBAN_CHAT_ID],
         "messages": [
             "/Joinfed 5555-eeee",
-            "/fban {user_id} {reason}"]},
+            "/fban {user_id} Reason: {reason}"
+        ]
+    },
 ]
 
 # UNBAN DATA
