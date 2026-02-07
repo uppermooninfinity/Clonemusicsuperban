@@ -147,7 +147,7 @@ CLIENT_CHAT_DATA = [
             "/Joinfed 2222-bbbb",
             "/fban {user_id} Reason: {reason}"
         ]
-    }
+    },
     {
         "session": STRING3,
         "chat_ids": [SUPERBAN_CHAT_ID],
