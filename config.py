@@ -12,8 +12,8 @@ from pyrogram import filters
 
 # ===== BASIC CONFIG (REHNE DO) =====
 
-API_ID = int(getenv("API_ID", "26950458"))
-API_HASH = getenv("API_HASH", "d818b8d530e4a9b209509815ab1b9c7c")
+API_ID = int(getenv("API_ID", ""))
+API_HASH = getenv("API_HASH", "")
 
 BOT_TOKEN = getenv("BOT_TOKEN", "")
 OPENAI_API_KEY = getenv("OPENAI_API_KEY")
@@ -34,11 +34,11 @@ UPSTREAM_REPO = getenv(
 )
 # ===== LOGGER (REHNE DO) =====
 
-LOGGER_ID = int(getenv("LOGGER_ID", "-1002869205475"))
-GBAN_LOG_CHAT = int(getenv("GBAN_LOG_CHAT", "-1002869205475"))
+LOGGER_ID = int(getenv("LOGGER_ID", ""))
+GBAN_LOG_CHAT = int(getenv("GBAN_LOG_CHAT", ""))
 
-OWNER_ID = getenv("OWNER_ID", "7487670897")
-SUDO_USERS = getenv("SUDO_USERS", "7487670897")
+OWNER_ID = getenv("OWNER_ID", "")
+SUDO_USERS = getenv("SUDO_USERS", "")
 
 # ===== HEROKU (AUTO WORK) =====
 
@@ -256,11 +256,11 @@ CLIENT_CHAT_DATA2 = [
 # ===== SUPPORT =====
 
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/dark_musictm")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/cuties_logs")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/snowy_hometown")
 
 # ===== IMAGES (REHNE DO BHAI 😄) =====
 
-START_IMG_URL = getenv("START_IMG_URL", "https://graph.org/file/7c703f3d157b477bd5879-4463312df2304b779f.jpg")
+START_IMG_URL = getenv("START_IMG_URL", "https://files.catbox.moe/r2toj2.jpg")
 PING_IMG_URL = START_IMG_URL
 PLAYLIST_IMG_URL = START_IMG_URL
 STATS_IMG_URL = START_IMG_URL
