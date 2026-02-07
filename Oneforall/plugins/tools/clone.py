@@ -51,6 +51,8 @@ C_BOT_COMMANDS = [
     {"command": "tts", "description": "enter a text and convert it to speech"}, 
     {"command": "slap", "description": "slap someone"},
     {"command": "lick", "description": "lick someone"},
+    {"command": "tagall", "description": "tag everyone in gc"},
+    {"command": "tagstop", "description": "stop tagging"}
     
 ]
 
