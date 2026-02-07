@@ -58,6 +58,11 @@
         "required": true
       }
     },
+     "STORAGE_CHANNEL_ID": {
+        "description": "Your STORAGE_CHANNEL_ID ID, add your bot and promote as an admin with full rights!. Don't Add Channel's ID.",
+        "value": "-1003132769250",
+        "required": true
+     }
     "buildpacks": [
           {
               "url": "heroku/python"
