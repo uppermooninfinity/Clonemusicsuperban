@@ -156,4 +156,67 @@ async def del_all_sudo(client, message: Message, _):
             if removed:
                 SUDOERS.remove(user_id)
                 count -= 1
+    await message.reply_text(f"Removed {count} users from the sudo list.")                    "๏ ᴠɪᴇᴡ ᴏᴡɴᴇʀ ๏", url=f"tg://openmessage?user_id={OWNER_ID}"
+                )
+            ]
+        )
+
+        count = 1
+        for user_id in SUDOERS:
+            if user_id != OWNER_ID:
+                try:
+                    user = await app.get_users(user_id)
+                    user_mention = (
+                        user.mention if user else f"**🎁 Sᴜᴅᴏ {count} ɪᴅ:** {user_id}"
+                    )
+                    caption += f"**🎁 Sᴜᴅᴏ** {count} **»** {user_mention}\n"
+                    button_text = f"๏ ᴠɪᴇᴡ sᴜᴅᴏ {count} ๏ "
+                    keyboard.append(
+                        [
+                            InlineKeyboardButton(
+                                button_text, url=f"tg://openmessage?user_id={user_id}"
+                            )
+                        ]
+                    )
+                    count += 1
+                except:
+                    continue
+
+        # Add a "Back" button at the end
+        keyboard.append(
+            [InlineKeyboardButton("๏ ʙᴀᴄᴋ ๏", callback_data="back_to_main_menu")]
+        )
+
+        if keyboard:
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            await callback_query.message.edit_caption(
+                caption=caption, reply_markup=reply_markup
+            )
+
+
+@app.on_callback_query(filters.regex("^back_to_main_menu$"))
+async def back_to_main_menu(client, callback_query: CallbackQuery):
+    keyboard = [
+        [InlineKeyboardButton("๏ ᴠɪᴇᴡ sᴜᴅᴏʟɪsᴛ ๏", callback_data="check_sudo_list")]
+    ]
+    reply_markupes = InlineKeyboardMarkup(keyboard)
+    await callback_query.message.edit_caption(
+        caption="<blockquote>**» ᴄʜᴇᴄᴋ sᴜᴅᴏ ʟɪsᴛ ʙʏ ɢɪᴠᴇɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ.**\n\n**» ɴᴏᴛᴇ:**  ᴏɴʟʏ sᴜᴅᴏ ᴜsᴇʀs ᴄᴀɴ ᴠɪᴇᴡ. </blockquote>",
+        reply_markup=reply_markupes,
+    )
+
+
+@app.on_message(
+    filters.command(["delallsudo"], prefixes=["/", "!", "%", ",", "", ".", "@", "#"])
+    & filters.user(OWNER_ID)
+)
+@language
+async def del_all_sudo(client, message: Message, _):
+    count = len(SUDOERS) - 1  # Exclude the admin from the count
+    for user_id in SUDOERS.copy():
+        if user_id != OWNER_ID:
+            removed = await remove_sudo(user_id)
+            if removed:
+                SUDOERS.remove(user_id)
+                count -= 1
     await message.reply_text(f"Removed {count} users from the sudo list.")
