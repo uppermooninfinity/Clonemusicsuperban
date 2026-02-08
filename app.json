@@ -1,71 +1,88 @@
 {
-    "name": "⛦ MUSIC X WAIFU ⛦",
-    "description": "A Telegram Music Player Bot with Superban System.",
-    "logo": "https://te.legra.ph/file/62fa7c81c56c1ae31c844.jpg",
-    "keywords": [
-        "python3",
-        "telegram",
-        "bot",
-        "MusicBot",
-        "pyrogram",
-        "superban"
-    ],
-    "env": {
-        "API_ID": {
-            "description": "Get this value from https://my.telegram.org",
-            "value": "39679517",
-            "required": true
-        },
-        "API_HASH": {
-            "description": "Get this value from https://my.telegram.org",
-            "value": "aed61e5ff8c711895f8b0c99e51c16cc",
-            "required": true
-        },
-        "BOT_TOKEN": {
-            "description": "A Bot's token from Botfather",
-            "value" : "",
-            "required": true
-        },
-        "MONGO_DB_URI": {
-            "description": "Get a mongodb url from https://cloud.mongodb.com.",
-            "value": "mongodb+srv://knight4563:knight4563@cluster0.a5br0se.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-            "required": true
-        },
-        "OWNER_ID": {
-            "description": "The user id of the OWNER.",
-            "value": "7651303468",
-            "required": true
-        },
-        "STRING_SESSION": {
-            "description": "Pyrogram v2 String Session",
-            "value" : "",
-            "required": true
-        },
-        "LOGGER_ID": {
-            "description": "Log Group ID (starts with -100)",
-            "value": "-1003228624224",
-            "required": true
-        },
-        "GBAN_LOG_CHAT": {
-            "description": "Chat ID for GBAN logs",
-            "value": "-1003228624224",
-            "required": true
-        },
-        "SUPERBAN_CHAT_ID": {
-            "description": "Chat ID for Superban requests",
-            "value": "-1003228624224",
-            "required": true
-        },
-        "STORAGE_CHANNEL_ID": {
-            "description": "Channel ID for database storage",
-            "value": "-1003132769250",
-            "required": true
-        }
+  "name": "superban x music ♪",
+  "description": "A Telegram Music Player Bot, written in Python with Pyrogram and Py-Tgcalls.",
+  "logo": "https://te.legra.ph/file/62fa7c81c56c1ae31c844.jpg",
+  "keywords": [
+    "python3",
+    "telegram",
+    "bot",
+    "Brandrd",
+    "MusicBot",
+    "telegram-bot",
+    "pyrogram"
+  ],
+  "env": {
+    "API_ID": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": "26950458",
+      "required": true
     },
-    "buildpacks": [
-        { "url": "heroku/python" },
-        { "url": "heroku/nodejs" },
-        { "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git" }
-    ],
-    "stack": "container"
+    "API_HASH": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": "d818b8d530e4a9b209509815ab1b9c7c",
+      "required": true
+    },
+    "BOT_TOKEN": {
+      "description": "A Bot's token from Botfather",
+      "value": "",
+      "required": true
+    },
+    "MONGO_DB_URI": {
+      "description": "Get a mongodb url from https://cloud.mongodb.com.",
+      "value": "mongodb+srv://knight4563:knight4563@cluster0.a5br0se.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+      "required": true
+    },
+    "OWNER_ID": {
+      "description": "The user id of user whom you would like to add as OWNER.",
+      "value": "7651303468",
+      "required": true
+    },
+    "STRING_SESSION": {
+      "description": "A Pyrogram v2 String Session from @BRANDEDSTRINGSESSION_BOT on Telegram.",
+      "value": "",
+      "required": true
+    },
+    "SUPERBAN_CHAT_ID": {
+      "description": "Chat ID where global/super bans are managed.",
+      "value": "-1003228624224",
+      "required": false
+    },
+    "LOGGER_ID": {
+      "description": "Technical logs group ID (bot must be admin).",
+      "value": "-1003228624224",
+      "required": true
+    },
+    "YOUTUBE_API_KEY": {
+      "description": "YouTube Data API v3 key from Google Cloud Console",
+      "value": "",
+      "required": false
+    },
+    "UPSTREAM_REPO": {
+      "description": "GitHub repository URL used for upstream auto updates (fork source repo)",
+      "value": "https://github.com/uppermooninfinity/MusicXsuperban",
+      "required": false
+    },
+    "HEROKU_API_KEY": {
+      "description": "Your Heroku account's API key",
+      "value": "",
+      "required": false
+    },
+    "HEROKU_APP_NAME": {
+      "description": "Your heroku app name",
+      "value": "",
+      "required": false
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    },
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    }
+  ],
+  "stack": "heroku-24"
 }
