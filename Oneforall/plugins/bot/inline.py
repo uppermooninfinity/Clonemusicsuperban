@@ -64,4 +64,34 @@ async def inline_query_handler(client, query):
         try:
             return await client.answer_inline_query(query.id, results=answers)
         except:
+            return                        InlineKeyboardButton(
+                            text="ʏᴏᴜᴛᴜʙᴇ 🎄",
+                            url=link,
+                        )
+                    ],
+                ]
+            )
+            searched_text = f"""
+❄ <b>ᴛɪᴛʟᴇ :</b> <a href={link}>{title}</a>
+
+⏳ <b>ᴅᴜʀᴀᴛɪᴏɴ :</b> {duration} ᴍɪɴᴜᴛᴇs
+👀 <b>ᴠɪᴇᴡs :</b> <code>{views}</code>
+🎥 <b>ᴄʜᴀɴɴᴇʟ :</b> <a href={channellink}>{channel}</a>
+⏰ <b>ᴘᴜʙʟɪsʜᴇᴅ ᴏɴ :</b> {published}
+
+
+<u><b>➻ ɪɴʟɪɴᴇ sᴇᴀʀᴄʜ ᴍᴏᴅᴇ ʙʏ {app.name}</b></u>"""
+            answers.append(
+                InlineQueryResultPhoto(
+                    photo_url=thumbnail,
+                    title=title,
+                    thumb_url=thumbnail,
+                    description=description,
+                    caption=searched_text,
+                    reply_markup=buttons,
+                )
+            )
+        try:
+            return await client.answer_inline_query(query.id, results=answers)
+        except:
             return
