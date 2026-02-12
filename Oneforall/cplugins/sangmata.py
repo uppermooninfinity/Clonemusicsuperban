@@ -1,69 +1,99 @@
-from database import DatabaseManager
-from typing import List, Dict, Any
-from datetime import datetime
+import asyncio
+import random
 
-class SangmataFeature:
-    def __init__(self):
-        self.db = DatabaseManager()
+from pyrogram import Client, filters
+from pyrogram.raw.functions.messages import DeleteHistory
+from pyrogram.types import Message
+from pyrogram.enums import ParseMode
 
-    def track_user(self, user_id: int, username: str, first_name: str, last_name: str) -> None:
-        self.db.record_user_history(user_id, username, first_name, last_name)
+from Oneforall import app
+from Oneforall import userbot as us
+from Oneforall.core.userbot import assistants
 
-    def get_user_info(self, user_id: int) -> str:
-        history = self.db.get_user_history(user_id)
 
-        if not history:
-            return "<blockquote expandable>📊 <b>ᴜꜱєʀ ʜɪꜱᴛσʀʏ</b>\n\n❌ ɪᴛ’ꜱ σʙᴠɪσᴜꜱ — ησ ʜɪꜱᴛσʀʏ ꜰσᴜηᴅ ꜰσʀ ᴛʜє ᴜꜱєʀ 📭🔍</blockquote>"
+@app.on_message(filters.command("sg"))
+async def sangmata_lookup(client: Client, message: Message):
 
-        current = history[-1] if history else None
-        changes = len(history)
+    # ✨ Decorative Processing Message
+    processing = await message.reply_text(
+        "🔎 ᴘʀᴏᴄᴇssɪɴɢ ʜɪsᴛᴏʀɪᴄᴀʟ ᴜsᴇʀɴᴀᴍᴇs...",
+        parse_mode=ParseMode.HTML
+    )
 
-        message = "<blockquote>📊 <b>ꜱᴧηɢϻᴧᴛᴧ — ᴜꜱєʀ ʜɪꜱᴛσʀʏ ᴛʀᴧᴄᴋєᴅ 📜🔍</b>\n\n"
-        message += f"🆔 <b>ᴜꜱєʀ ɪᴅ 🆔🔹:</b> <code>{user_id}</code>\n\n"
+    # Determine target
+    if message.reply_to_message:
+        user_id = message.reply_to_message.from_user.id
+    elif len(message.command) > 1:
+        user_id = message.command[1]
+    else:
+        return await processing.edit_text(
+            "⚠️ ᴜsᴀɢᴇ:\n"
+            "/sg ᴜsᴇʀɴᴀᴍᴇ\n"
+            "ᴏʀ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴜsᴇʀ ᴡɪᴛʜ /sg",
+            parse_mode=ParseMode.HTML
+        )
 
-        if current:
-            message += "📝 <b>ᴄᴜʀʀєηᴛ ɪηꜰσʀϻᴧᴛɪση 📌🔎</b>\n"
-            message += f"👤 <b>ꜰɪʀꜱᴛ ηᴧϻє ✨:</b> {current.get('first_name', 'N/A')}\n"
-            message += f"👥 <b>ʟᴧꜱᴛ ηᴧϻє 🩷:</b> {current.get('last_name', 'N/A')}\n"
-            message += f"🔖 <b>ᴜꜱєʀηᴧϻє 📥:</b> @{current.get('username', 'None')}\n\n"
+    # Fetch user
+    try:
+        user = await client.get_users(user_id)
+    except Exception:
+        return await processing.edit_text(
+            "❌ ɪɴᴠᴀʟɪᴅ ᴜsᴇʀ sᴘᴇᴄɪғɪᴇᴅ.",
+            parse_mode=ParseMode.HTML
+        )
 
-        message += f"🔄 <b>ᴛσᴛᴧʟ ᴄʜᴧηɢєꜱ 🔄✨:</b> {changes}\n\n"
+    # Random sangmata bot
+    sangmata_bots = ["sangmata_bot", "sangmata_beta_bot"]
+    selected_bot = random.choice(sangmata_bots)
 
-        message += "📜 <b>ʜɪꜱᴛσʀʏ ʟσɢꜱ 📜✨</b>\n"
-        message += "━━━━━━━━━━━━━━━━\n\n"
+    # Assistant check
+    if 1 in assistants:
+        ubot = us.one
+    else:
+        return await processing.edit_text(
+            "❌ ᴜsᴇʀʙᴏᴛ ᴀssɪsᴛᴀɴᴛ ɴᴏᴛ ғᴏᴜɴᴅ.",
+            parse_mode=ParseMode.HTML
+        )
 
-        for idx, record in enumerate(history, 1):
-            recorded_at = record.get('recorded_at', 'Unknown')
-            if recorded_at != 'Unknown':
-                try:
-                    dt = datetime.fromisoformat(recorded_at.replace('Z', '+00:00'))
-                    recorded_at = dt.strftime('%Y-%m-%d %H:%M:%S')
-                except:
-                    pass
+    # Send ID
+    try:
+        sent = await ubot.send_message(selected_bot, str(user.id))
+        await sent.delete()
+    except Exception as e:
+        return await processing.edit_text(
+            f"❌ {str(e)}",
+            parse_mode=ParseMode.HTML
+        )
 
-            message += f"<b>#{idx}</b> - 📅 {recorded_at}\n"
-            message += f"   👤 ηᴧϻє ✨: {record.get('first_name', 'N/A')} {record.get('last_name', 'N/A')}\n"
-            message += f"   🔖 ᴜꜱєʀηᴧϻє ✨: @{record.get('username', 'None')}\n\n"
+    await asyncio.sleep(2)
 
-        message += "━━━━━━━━━━━━━━━━\n"
-        message += "ℹ️ <i>ᴛʜɪꜱ ꜰєᴧᴛᴜʀє ᴛʀᴧᴄᴋꜱ ᴜꜱєʀηᴧϻє ᴧηᴅ ηᴧϻє ᴄʜᴧηɢєꜱ σᴠєʀ ᴛɪϻє ⏳✨</i>\n"
-        message += "</blockquote>"
+    # Get reply
+    result = None
+    async for msg in ubot.search_messages(selected_bot, limit=5):
+        if msg.text:
+            result = msg.text
+            break
 
-        return message
+    if result:
+        await message.reply_text(
+            f"👤 ᴜsᴇʀ: {user.mention}\n"
+            f"🆔 {user.id}\n\n"
+            f"📜 ɴᴀᴍᴇ ʜɪsᴛᴏʀʏ:\n\n"
+            f"{result}",
+            parse_mode=ParseMode.HTML,
+            disable_web_page_preview=True
+        )
+    else:
+        await message.reply_text(
+            "⚠️ ɴᴏ ʜɪsᴛᴏʀɪᴄᴀʟ ᴅᴀᴛᴀ ғᴏᴜɴᴅ.",
+            parse_mode=ParseMode.HTML
+        )
 
-    def format_quick_info(self, user_id: int) -> str:
-        history = self.db.get_user_history(user_id)
+    # Clear history with bot
+    try:
+        peer = await ubot.resolve_peer(selected_bot)
+        await ubot.send(DeleteHistory(peer=peer, max_id=0, revoke=True))
+    except Exception:
+        pass
 
-        if not history:
-            return "📊 No history available"
-
-        current = history[-1]
-        changes = len(history) - 1
-
-        info = f"👤 {current.get('first_name', 'N/A')}"
-        if current.get('username'):
-            info += f" (@{current.get('username')})"
-        if changes > 0:
-            info += f"\n🔄 {changes} change(s) detected"
-
-        return info
+    await processing.delete()
