@@ -21,7 +21,7 @@ GIT_TOKEN = getenv("GIT_TOKEN", None)
 
 MONGO_DB_URI = getenv("MONGO_DB_URI", "")
 
-MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "Dark Music")
+MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "")
 PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", None)
 
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 100000))
@@ -212,18 +212,18 @@ CLIENT_CHAT_DATA2 = [
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/dark_musictm")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/snowy_hometown")
 
-START_IMG_URL = getenv("START_IMG_URL", "https://files.catbox.moe/hmr8t9.jpg")
-PING_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
-PLAYLIST_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
-STATS_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
-TELEGRAM_AUDIO_URL = "https://files.catbox.moe/hmr8t9.jpg"
-TELEGRAM_VIDEO_URL = "https://files.catbox.moe/hmr8t9.jpg"
-STREAM_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
-SOUNCLOUD_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
-YOUTUBE_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
-SPOTIFY_ARTIST_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
-SPOTIFY_ALBUM_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
-SPOTIFY_PLAYLIST_IMG_URL = "https://files.catbox.moe/hmr8t9.jpg"
+START_IMG_URL = getenv("START_IMG_URL", "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg")
+PING_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+PLAYLIST_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+STATS_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+TELEGRAM_AUDIO_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+TELEGRAM_VIDEO_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+STREAM_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+SOUNCLOUD_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+YOUTUBE_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+SPOTIFY_ARTIST_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+SPOTIFY_ALBUM_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
+SPOTIFY_PLAYLIST_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
 # ... (Baaki links same rahenge)
 
 #--------------------------------
