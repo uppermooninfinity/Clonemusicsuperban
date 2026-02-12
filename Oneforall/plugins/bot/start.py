@@ -29,18 +29,24 @@ from Oneforall.misc import SUDOERS
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     await message.react("❤")
+
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
-        if name[0:4] == "help":
+
+        if name.startswith("help"):
             keyboard = help_pannel(_)
+
+            # send sticker first
             await message.reply_sticker(
-                    "CAACAgUAAxkBCAACAgUAAxkBAAEQPYppZ5NUzyEuz9krlTBI7WJxE4l9HgACxggAAtL9OVfNmn5c5Qtt7DgE"
+                "CAACAgUAAxkBCAACAgUAAxkBAAEQPYppZ5NUzyEuz9krlTBI7WJxE4l9HgACxggAAtL9OVfNmn5c5Qtt7DgE"
             )
+
+            # send help text
+            help_text = _["help_1"].format(config.SUPPORT_CHAT)
             return await message.reply(
-        f"{text}\n\n<a href='{START_IMG_URI}'>✦ ʟєᴛ ᴛʜɪꜱ ʙєᴧᴜᴛɪꜰᴜʟ ᴊσᴜʀηєʏ ʙєɢɪη 🌸✨</a>",
-        reply_markup=keyboard
-                caption=_["help_1"].format(config.SUPPORT_CHAT),
+                f"{help_text}\n\n<a href='{START_IMG_URI}'>✦ ʟєᴛ ᴛʜɪꜱ ʙєᴧᴜᴛɪꜰᴜʟ ᴊσᴜʀηєʏ ʙєɢɪη 🌸✨</a>",
                 reply_markup=keyboard,
+                parse_mode="html"
             )
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
