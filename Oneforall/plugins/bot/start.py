@@ -34,10 +34,10 @@ async def start_pm(client, message: Message, _):
         if name[0:4] == "help":
             keyboard = help_pannel(_)
             await message.reply_sticker(
-                    "CAACAgUAAxkBAAEQPYppZ5NUzyEuz9krlTBI7WJxE4l9HgACxggAAtL9OVfNmn5c5Qtt7DgE"
-             )
+                    "CAACAgUAAxkBCAACAgUAAxkBAAEQPYppZ5NUzyEuz9krlTBI7WJxE4l9HgACxggAAtL9OVfNmn5c5Qtt7DgE"
+            )
             return await message.reply(
-        f"{text}\n\n<a href='{START_IMG_URI}'>๏ ʟᴇᴛ'ꜱ ʙᴇɢɪɴ ᴛʜᴇ ʜᴜɴᴛ! 🐺</a>",
+        f"{text}\n\n<a href='{START_IMG_URI}'>✦ ʟєᴛ ᴛʜɪꜱ ʙєᴧᴜᴛɪꜰᴜʟ ᴊσᴜʀηєʏ ʙєɢɪη 🌸✨</a>",
         reply_markup=keyboard
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
@@ -91,7 +91,7 @@ async def start_pm(client, message: Message, _):
     else:
         out = private_panel(_)
         await message.reply_sticker(
-            "CAACAgUAAxkBAAEQPYppZ5NUzyEuz9krlTBI7WJxE4l9HgACxggAAtL9OVfNmn5c5Qtt7DgE"
+            "CAACAgUAAxkBAAEQgBFpjhdsyW0ZycIfyrimkT4PM9P7gQACzhsAAhsUcFQxikUzF5B6dzoE"
         )
         await message.reply_photo(
             photo=config.START_IMG_URL,
