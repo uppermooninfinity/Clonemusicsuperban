@@ -8,7 +8,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import AccessTokenExpired, AccessTokenInvalid
 
 from Oneforall import app
-from Oneforall.core.call import userbot
+from Oneforall.core.call import Hotty
 from Oneforall.misc import SUDOERS
 from Oneforall.utils.decorators.language import language
 from Oneforall.utils.database.clonedb import (
