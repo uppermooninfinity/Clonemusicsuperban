@@ -532,7 +532,6 @@ def panel_markup_clone(_, vidid, chat_id):
                 callback_data=f"Pages Forw|2|{videoid}|{chat_id}",
             ),
         ],
-    ]
     return buttons
 
 
