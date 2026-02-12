@@ -44,7 +44,7 @@ async def start_pm(client, message: Message, _):
             # send help text
             help_text = _["help_1"].format(config.SUPPORT_CHAT)
             return await message.reply(
-                f"{help_text}\n\n<a href='{START_IMG_URI}'>✦ ʟєᴛ ᴛʜɪꜱ ʙєᴧᴜᴛɪꜰᴜʟ ᴊσᴜʀηєʏ ʙєɢɪη 🌸✨</a>",
+                f"{help_text}\n\n<a href='{START_IMG_URL}'>✦ ʟєᴛ ᴛʜɪꜱ ʙєᴧᴜᴛɪꜰᴜʟ ᴊσᴜʀηєʏ ʙєɢɪη 🌸✨</a>",
                 reply_markup=keyboard,
                 parse_mode="html"
             )
