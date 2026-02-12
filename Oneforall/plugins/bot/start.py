@@ -42,11 +42,11 @@ async def start_pm(client, message: Message, _):
             )
 
             # send help text
-            help_text = _["help_1"].format(config.SUPPORT_CHAT)
-            return await message.reply(
-                f"{help_text}\n\n<a href='{START_IMG_URL}'>✦ ʟєᴛ ᴛʜɪꜱ ʙєᴧᴜᴛɪꜰᴜʟ ᴊσᴜʀηєʏ ʙєɢɪη 🌸✨</a>",
-                reply_markup=keyboard,
-                parse_mode="html"
+            return await message.reply_photo(
+                    video=config.START_IMG_URL,
+                    caption=_["help_1"].format(config.SUPPORT_CHAT),
+                    reply_markup=help_pannel(_),
+                    has_spoiler=true,
             )
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
