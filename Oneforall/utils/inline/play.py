@@ -526,7 +526,7 @@ def panel_markup_clone(_, vidid, chat_id):
     ]
 
     return buttons    callback_data=f"Pages Back|2|{videoid}|{chat_id}",
-    ]
+        [
             InlineKeyboardButton(
                 text="❥ ɴᴇxᴛ ❥",
                 callback_data=f"Pages Forw|2|{videoid}|{chat_id}",
