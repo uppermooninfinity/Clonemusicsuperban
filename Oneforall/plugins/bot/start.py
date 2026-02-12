@@ -36,11 +36,11 @@ async def start_pm(client, message: Message, _):
             await message.reply_sticker(
                     "CAACAgUAAxkBAAEQPYppZ5NUzyEuz9krlTBI7WJxE4l9HgACxggAAtL9OVfNmn5c5Qtt7DgE"
              )
-            return await message.reply_photo(
-                photo=config.START_IMG_URL,
+            return await message.reply(
+        f"{text}\n\n<a href='{START_IMG_URI}'>๏ ʟᴇᴛ'ꜱ ʙᴇɢɪɴ ᴛʜᴇ ʜᴜɴᴛ! 🐺</a>",
+        reply_markup=keyboard
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
-                has_spoiler=true,
             )
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
