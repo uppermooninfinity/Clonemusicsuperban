@@ -26,9 +26,8 @@ class Hotty(Client):
         self.mention = self.me.mention
 
         try:
-            await self.send_photo(
-                    config.LOGGER_ID,
-                    photo=config.START_IMG_URL,
+            await self.send_message(
+                chat_id=config.LOGGER_ID,
                 text=f"<u><b>📢 ʙσᴛ σηʟɪηє 🟢✨\n\n»{self.mention} ʙσᴛ ꜱᴛᴧʀᴛєᴅ ꜱᴜᴄᴄєꜱꜱꜰᴜʟʟʏ 🚀✨ :</b><u>\n\n♡ ᴘʏʀσɢʀᴧϻ ᴠєʀꜱɪση ⚙️ : v2.0.107\n♡ ᴘʏ-ᴛɢᴄᴧʟʟꜱ 🎙️ : 1.2.9\n\n💽ʙσᴛ ꜱᴜᴅσєʀꜱ ᴀηᴅ ϻᴧηᴧɢєϻєηᴛ ᴛєᴧϻ ᴀʀє ʀєqᴜєꜱᴛєᴅ ᴛσ ϻσηɪᴛσʀ ᴛʜє ᴅɪꜱᴋ ꜱᴘᴧᴄє ᴀηᴅ ʀᴧϻ σꜰ ᴠϻ єηɢɪηє ",
             )
         except (errors.ChannelInvalid, errors.PeerIdInvalid):
