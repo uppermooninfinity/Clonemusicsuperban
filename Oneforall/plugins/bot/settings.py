@@ -40,6 +40,29 @@ from Oneforall.utils.inline.start import private_panel
 
 
 @app.on_message(
+    filters.command(["settings", "setting"]) & filters.gret_playtype,
+    get_upvote_count,
+    is_nonadmin_chat,
+    is_skipmode,
+    remove_nonadmin_chat,
+    set_playmode,
+    set_playtype,
+    set_upvotes,
+    skip_off,
+    skip_on,
+)
+from Oneforall.utils.decorators.admins import ActualAdminCB
+from Oneforall.utils.decorators.language import language, languageCB
+from Oneforall.utils.inline.settings import (
+    auth_users_markup,
+    playmode_users_markup,
+    setting_markup,
+    vote_mode_markup,
+)
+from Oneforall.utils.inline.start import private_panel
+
+
+@app.on_message(
     filters.command(["settings", "setting"]) & filters.group & ~BANNED_USERS
 )
 @language
@@ -49,18 +72,6 @@ async def settings_mar(client, message: Message, _):
         _["setting_1"].format(app.mention, message.chat.id, message.chat.title),
         reply_markup=InlineKeyboardMarkup(buttons),
     )
-
-
-@app.on_callback_query(filters.regex("gib_source") & ~BANNED_USERS)
-@languageCB
-async def gib_repo(client, CallbackQuery, _):
-    await CallbackQuery.edit_message_media(
-        InputMediaVideo("https://files.catbox.moe/dfj9zk.mp4"),
-        reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text="ʙᴀᴄᴋ", callback_data=f"settingsback_helper")]]
-        ),
-    )
-
 
 @app.on_callback_query(filters.regex("settings_helper") & ~BANNED_USERS)
 @languageCB
@@ -84,35 +95,7 @@ async def settings_cb(client, CallbackQuery, _):
 async def settings_back_markup(client, CallbackQuery: CallbackQuery, _):
     try:
         await CallbackQuery.answer()
-    except:
-        pass
-    if CallbackQuery.message.chat.type == ChatType.PRIVATE:
-        await app.resolve_peer(OWNER_ID)
-        OWNER = OWNER_ID
-        buttons = private_panel(_)
-        return await CallbackQuery.edit_message_media(
-            InputMediaPhoto(
-                media=START_IMG_URL,
-                caption=_["start_2"].format(
-                    CallbackQuery.from_user.first_name, app.mention
-                ),
-            ),
-            reply_markup=InlineKeyboardMarkup(buttons),
-        )
-    else:
-        buttons = setting_markup(_)
-        return await CallbackQuery.edit_message_reply_markup(
-            reply_markup=InlineKeyboardMarkup(buttons)
-        )
-
-
-@app.on_callback_query(
-    filters.regex(
-        pattern=r"^(SEARCHANSWER|PLAYMODEANSWER|PLAYTYPEANSWER|AUTHANSWER|ANSWERVOMODE|VOTEANSWER|PM|AU|VM)$"
-    )
-    & ~BANNED_USERS
-)
-@languageCB
+guageCB
 async def without_Admin_rights(client, CallbackQuery, _):
     command = CallbackQuery.matches[0].group(1)
     if command == "SEARCHANSWER":
@@ -406,3 +389,4 @@ async def vote_change(client, CallbackQuery, _):
         )
     except MessageNotModified:
         return
+
