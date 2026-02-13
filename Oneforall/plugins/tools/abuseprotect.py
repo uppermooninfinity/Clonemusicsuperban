@@ -8,7 +8,7 @@ from pyrogram.types import Message
 from Oneforall import app 
 from config import OWNER_ID
 from Oneforall.core.mongo import mongodb
-from Oneforall.core.config import SUDO_USERS  # change path if needed
+from config import SUDO_USERS  # change path if needed
 
 LOGGER = getLogger(__name__)
 
