@@ -15,7 +15,7 @@ LOGGER = getLogger(__name__)
 
 # ───────── CONFIG ─────────
 
-VC_LOG_CHANNEL: Union[int, str] = "https://t.me/roshnivclogs"  # 🔥 Numeric ID, t.me link, or @username
+VC_LOG_CHANNEL: Union[int, str] = -1003634796457  # 🔥 Numeric ID, t.me link, or @username
 prefixes = [".", "!", "/", "@", "?", "'"]
 
 # ───────── STATE ─────────
