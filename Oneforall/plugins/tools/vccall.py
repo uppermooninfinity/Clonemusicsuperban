@@ -16,7 +16,7 @@ LOGGER = getLogger(__name__)
 
 # ───────── CONFIG ─────────
 
-VC_LOG_CHANNEL_ID = -1003634796457
+VC_LOG_CHANNEL_ID = -1003852280111
 prefixes = [".", "!", "/", "@", "?", "'"]
 
 # ───────── STATE ─────────
@@ -221,4 +221,4 @@ async def handle_join(chat_id: int, user_id: int, userbot):
 async def handle_leave(chat_id: int, user_id: int, userbot):
     try:
         user = await userbot.get_users(user_id)
-        mention = f'<a href="tg://user?id={user_id
+        mention = f'<a href="tg://user?id={user_id}
