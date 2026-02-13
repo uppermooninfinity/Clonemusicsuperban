@@ -212,7 +212,7 @@ CLIENT_CHAT_DATA2 = [
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/dark_musictm")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/snowy_hometown")
 
-START_IMG_URL = getenv("START_IMG_URL", "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg")
+START_VID_URL = getenv("START_VID_URL", "https://files.catbox.moe/m8npjm.mp4")
 PING_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
 PLAYLIST_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
 STATS_IMG_URL = "https://graph.org/file/cb128c7c5df838c999ede-47c87694df487b317c.jpg"
