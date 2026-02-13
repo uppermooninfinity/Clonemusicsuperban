@@ -221,4 +221,19 @@ async def handle_join(chat_id: int, user_id: int, userbot):
 async def handle_leave(chat_id: int, user_id: int, userbot):
     try:
         user = await userbot.get_users(user_id)
-        mention = f'<a href="tg://user?id={user_id}
+        mention = f'<a href="tg://user?id={user_id}">{to_small_caps(user.first_name)}</a>'
+
+        now = datetime.now().strftime("%d-%m-%Y | %H:%M:%S")
+
+        text = (
+            "╭── 🎙️ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ ──╮\n\n"
+            f"➤ {mention}\n"
+            "   ʟᴇғᴛ ᴛʜᴇ ᴠᴄ 💔\n\n"
+            f"⏰ {now}\n"
+            "╰────────────────╯"
+        )
+
+        await app.send_message(VC_LOG_CHANNEL_ID or chat_id, text)
+
+    except Exception as e:
+        LOGGER.error(f"Leave Error: {e}")
