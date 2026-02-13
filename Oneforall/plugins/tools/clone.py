@@ -7,6 +7,10 @@ from datetime import datetime
 from pyrogram import Client, filters
 from pyrogram.errors import AccessTokenExpired, AccessTokenInvalid
 
+# main.py ya Oneforall/__init__.py ke top pe
+from dotenv import load_dotenv
+load_dotenv()  # ab .env ke variables load ho jayenge
+
 from Oneforall import app
 from Oneforall import userbot as us
 from Oneforall.misc import SUDOERS
