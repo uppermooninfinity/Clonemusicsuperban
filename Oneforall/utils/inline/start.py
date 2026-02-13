@@ -23,7 +23,7 @@ def private_panel(_):
         ],
         [
             InlineKeyboardButton(text=_["S_B_2"], url=config.SUPPORT_CHAT),
-            InlineKeyboardButton("✦ ᴘʀᴏᴍᴏ ❤️‍🩹", url="https://t.me/cyber_github"),
+            InlineKeyboardButton("✦ ꜰᴜη 🎉✨", url="https://t.me/docker_git_bit"),
         ],
         [
             InlineKeyboardButton(text=_["S_B_6"], url=config.SUPPORT_CHANNEL),
