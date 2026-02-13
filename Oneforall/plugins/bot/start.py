@@ -1,4 +1,5 @@
 import time
+import asyncio
 
 from pyrogram import filters
 from pyrogram.enums import ChatType
@@ -29,6 +30,22 @@ from Oneforall.misc import SUDOERS
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     await message.react("❤")
+
+    typing_message = await message.reply("<b>𝖣ɪɴɢ..𝖣ᴏɴɢ..❤️‍🔥</b>")
+    
+    
+    typing_text = "<b>𝖲ᴛᴀʀᴛɪɴɢ...❤️‍🔥</b>"
+    
+    for i in range(1, len(typing_text) + 1):  
+        try:
+            await typing_message.edit_text(typing_text[:i])
+            await asyncio.sleep(0.001)  
+        except Exception as e:
+            print(f"Error while editing message : {e}")  
+
+    await asyncio.sleep(2)  
+    await typing_message.delete()  
+    
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
@@ -90,8 +107,8 @@ async def start_pm(client, message: Message, _):
     else:
         out = private_panel(_)
         await message.reply_sticker(
-            "CAACAgUAAxkBCAACAgUAAxkBAAEQPYppZ5NUzyEuz9krlTBI7WJxE4l9HgACxggAAtL9OVfNmn5c5Qtt7DgE"
-        )
+                "CAACAgUAAxkBCAACAgUAAxkBAAEQPYppZ5NUzyEuz9krlTBI7WJxE4l9HgACxggAAtL9OVfNmn5c5Qtt7DgE"
+         )
         await message.reply_photo(
             photo=config.START_IMG_URL,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
