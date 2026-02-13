@@ -1,7 +1,7 @@
 import asyncio
 from datetime import datetime
 from logging import getLogger
-from typing import Dict, Set
+from typing import Dict, Set, Union
 
 from pyrogram import filters
 from pyrogram.types import Message
@@ -15,7 +15,7 @@ LOGGER = getLogger(__name__)
 
 # ───────── CONFIG ─────────
 
-VC_LOG_CHANNEL_ID = -1003852280111  # 🔥 PUT YOUR VC LOG CHANNEL ID
+VC_LOG_CHANNEL: Union[int, str] = "https://t.me/roshnivclogs"  # 🔥 Numeric ID, t.me link, or @username
 prefixes = [".", "!", "/", "@", "?", "'"]
 
 # ───────── STATE ─────────
@@ -25,7 +25,6 @@ vc_logging_status: Dict[int, bool] = {}
 vc_monitor_tasks: Dict[int, asyncio.Task] = {}
 
 vcloggerdb = mongodb.vclogger
-
 
 # ───────── SMALL CAPS ─────────
 
@@ -39,7 +38,6 @@ def to_small_caps(text: str):
         "U":"ᴜ","V":"ᴠ","W":"ᴡ","X":"x","Y":"ʏ","Z":"ᴢ"
     }
     return "".join(mapping.get(c, c) for c in text)
-
 
 # ───────── DATABASE ─────────
 
@@ -62,6 +60,24 @@ async def get_vc_logger_status(chat_id: int) -> bool:
     doc = await vcloggerdb.find_one({"chat_id": chat_id})
     return doc["status"] if doc else False
 
+# ───────── UTILITY: Resolve Channel ─────────
+
+async def resolve_channel(client, channel: Union[int, str]):
+    """Resolve numeric ID or public link/username to peer ID."""
+    if isinstance(channel, int):
+        return channel
+    try:
+        if channel.startswith("https://t.me/"):
+            channel = channel.replace("https://t.me/", "")
+        elif channel.startswith("t.me/"):
+            channel = channel.replace("t.me/", "")
+        elif channel.startswith("@"):
+            channel = channel[1:]
+        resolved = await client.get_chat(channel)
+        return resolved.id
+    except Exception as e:
+        LOGGER.error(f"Failed to resolve VC log channel: {e}")
+        return None
 
 # ───────── COMMAND: VC LOGGER ─────────
 
@@ -91,15 +107,13 @@ async def vclogger_command(_, message: Message):
         vc_logging_status[chat_id] = False
         await save_vc_logger_status(chat_id, False)
         await stop_monitor(chat_id)
-        await message.reply("🚫 <b>VC Logger Disabled</b>")
-
+        await message.reply("🚫 <b>ᴠᴄ ʟσɢɢєʀ σғғ</b>")
 
 # ───────── COMMAND: VC MEMBERS ─────────
 
 @app.on_message(filters.command("vcmembers", prefixes=prefixes) & filters.group)
 async def vc_members_command(_, message: Message):
     chat_id = message.chat.id
-
     userbot = await get_assistant(chat_id)
     if not userbot:
         return await message.reply("❌ <b>Assistant session not found</b>")
@@ -111,21 +125,14 @@ async def vc_members_command(_, message: Message):
         if not participants:
             return await message.reply("🎧 <b>No Active Voice Chat Found</b>")
 
-        user_ids = [
-            p.peer.user_id
-            for p in participants
-            if hasattr(p.peer, "user_id")
-        ]
-
+        user_ids = [p.peer.user_id for p in participants if hasattr(p.peer, "user_id")]
         users = await userbot.get_users(user_ids)
 
         text = "╭─── 🎙️ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ ᴍᴇᴍʙᴇʀs ───╮\n\n"
         text += f"👥 ᴛᴏᴛᴀʟ : <code>{len(users)}</code>\n\n"
-
         for i, user in enumerate(users, start=1):
             mention = f'<a href="tg://user?id={user.id}">{to_small_caps(user.first_name)}</a>'
             text += f"{i}. {mention}\n"
-
         text += "\n╰──────────────────────╯"
 
         await message.reply(text)
@@ -133,7 +140,6 @@ async def vc_members_command(_, message: Message):
     except Exception as e:
         LOGGER.error(f"VC Members Error: {e}")
         await message.reply("⚠️ <b>Error fetching VC members</b>")
-
 
 # ───────── MONITOR CONTROL ─────────
 
@@ -149,32 +155,21 @@ async def stop_monitor(chat_id: int):
         task.cancel()
     vc_active_users.pop(chat_id, None)
 
-
 # ───────── VC CORE ─────────
 
 async def get_group_call_participants(userbot, peer):
     try:
-        full = await userbot.invoke(
-            functions.channels.GetFullChannel(channel=peer)
-        )
+        full = await userbot.invoke(functions.channels.GetFullChannel(channel=peer))
         if not full.full_chat.call:
             return []
 
         call = full.full_chat.call
         res = await userbot.invoke(
-            functions.phone.GetGroupParticipants(
-                call=call,
-                ids=[],
-                sources=[],
-                offset="",
-                limit=100
-            )
+            functions.phone.GetGroupParticipants(call=call, ids=[], sources=[], offset="", limit=100)
         )
         return res.participants
-
     except Exception:
         return []
-
 
 async def monitor_vc_chat(chat_id: int):
     userbot = await get_assistant(chat_id)
@@ -186,16 +181,11 @@ async def monitor_vc_chat(chat_id: int):
             peer = await userbot.resolve_peer(chat_id)
             participants = await get_group_call_participants(userbot, peer)
 
-            new_users = {
-                p.peer.user_id for p in participants
-                if hasattr(p.peer, "user_id")
-            }
-
+            new_users = {p.peer.user_id for p in participants if hasattr(p.peer, "user_id")}
             old_users = vc_active_users.get(chat_id, set())
 
             for uid in new_users - old_users:
                 asyncio.create_task(handle_user_join(chat_id, uid, userbot))
-
             for uid in old_users - new_users:
                 asyncio.create_task(handle_user_leave(chat_id, uid, userbot))
 
@@ -207,7 +197,6 @@ async def monitor_vc_chat(chat_id: int):
         except Exception as e:
             LOGGER.error(f"VC Monitor Error: {e}")
             await asyncio.sleep(5)
-
 
 # ───────── BEAUTIFUL JOIN / LEAVE ─────────
 
@@ -225,12 +214,10 @@ async def handle_user_join(chat_id: int, user_id: int, userbot):
             "╰────────────────╯"
         )
 
-        msg = await app.send_message(chat_id, text)
+        msg = await app.send_message(await resolve_channel(app, VC_LOG_CHANNEL), text)
         asyncio.create_task(delete_after_delay(msg, 10))
-
     except Exception as e:
         LOGGER.error(f"Join Error: {e}")
-
 
 async def handle_user_leave(chat_id: int, user_id: int, userbot):
     try:
@@ -246,12 +233,10 @@ async def handle_user_leave(chat_id: int, user_id: int, userbot):
             "╰────────────────╯"
         )
 
-        msg = await app.send_message(chat_id, text)
+        msg = await app.send_message(await resolve_channel(app, VC_LOG_CHANNEL), text)
         asyncio.create_task(delete_after_delay(msg, 10))
-
     except Exception as e:
         LOGGER.error(f"Leave Error: {e}")
-
 
 async def delete_after_delay(msg, delay: int):
     try:
@@ -259,7 +244,6 @@ async def delete_after_delay(msg, delay: int):
         await msg.delete()
     except Exception:
         pass
-
 
 # ───────── INIT ─────────
 
