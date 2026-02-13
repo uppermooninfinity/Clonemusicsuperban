@@ -156,11 +156,8 @@ async def del_all_sudo(client, message: Message, _):
             if removed:
                 SUDOERS.remove(user_id)
                 count -= 1
-    await message.reply_text(f"Removed {count} users from the sudo list.")                    "๏ ᴠɪᴇᴡ ᴏᴡɴᴇʀ ๏", url=f"tg://openmessage?user_id={OWNER_ID}"
-                )
-            ]
-        )
-
+    await message.reply_text(f"Removed {count} users from the sudo list.")                    
+                     ("๏ ᴠɪᴇᴡ ᴏᴡɴᴇʀ ๏", url=f"tg://openmessage?user_id={OWNER_ID}")
         count = 1
         for user_id in SUDOERS:
             if user_id != OWNER_ID:
@@ -211,12 +208,3 @@ async def back_to_main_menu(client, callback_query: CallbackQuery):
     & filters.user(OWNER_ID)
 )
 @language
-async def del_all_sudo(client, message: Message, _):
-    count = len(SUDOERS) - 1  # Exclude the admin from the count
-    for user_id in SUDOERS.copy():
-        if user_id != OWNER_ID:
-            removed = await remove_sudo(user_id)
-            if removed:
-                SUDOERS.remove(user_id)
-                count -= 1
-    await message.reply_text(f"Removed {count} users from the sudo list.")
