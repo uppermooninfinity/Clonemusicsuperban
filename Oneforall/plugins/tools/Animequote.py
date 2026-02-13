@@ -1,66 +1,12 @@
 import json
 import random
-
 import requests
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
-from telegram.ext import CallbackContext, CallbackQueryHandler
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from Oneforall import app
 
-from Oneforall import dispatcher,OWNER_ID
-from Oneforall.modules.disable import DisableAbleCommandHandler
-
-
-def anime_quote():
-    url = "https://animechan.vercel.app/api/random"
-    # since text attribute returns dictionary like string
-    response = requests.get(url)
-    try:
-        dic = json.loads(response.text)
-    except Exception:
-        pass
-    quote = dic["quote"]
-    character = dic["character"]
-    anime = dic["anime"]
-    return quote, character, anime
-
-
-def quotes(update: Update, context: CallbackContext):
-    message = update.effective_message
-    quote, character, anime = anime_quote()
-    msg = f"<i>❝{quote}❞</i>\n\n<b>{character} from {anime}</b>"
-    keyboard = InlineKeyboardMarkup(
-        [[InlineKeyboardButton(text="Change🔁", callback_data="change_quote")]]
-    )
-    message.reply_text(
-        msg,
-        reply_markup=keyboard,
-        parse_mode=ParseMode.HTML,
-    )
-
-
-def change_quote(update: Update, context: CallbackContext):
-    update.callback_query
-    update.effective_chat
-    message = update.effective_message
-    quote, character, anime = anime_quote()
-    msg = f"<i>❝{quote}❞</i>\n\n<b>{character} from {anime}</b>"
-    keyboard = InlineKeyboardMarkup(
-        [[InlineKeyboardButton(text="ᴄʜᴀɴɢᴇ🔁", callback_data="quote_change")]]
-    )
-    message.edit_text(msg, reply_markup=keyboard, parse_mode=ParseMode.HTML)
-
-
-def animequotes(update: Update, context: CallbackContext):
-    message = update.effective_message
-    message.reply_to_message.from_user.first_name if message.reply_to_message else message.from_user.first_name
-    reply_photo = (
-        message.reply_to_message.reply_photo
-        if message.reply_to_message
-        else message.reply_photo
-    )
-    reply_photo(random.choice(QUOTES_IMG))
-
-
-QUOTES_IMG = (
+# ───────── QUOTES IMAGES ─────────
+QUOTES_IMG = [
     "https://i.imgur.com/Iub4RYj.jpg",
     "https://i.imgur.com/uvNMdIl.jpg",
     "https://i.imgur.com/YOBOntg.jpg",
@@ -81,76 +27,51 @@ QUOTES_IMG = (
     "https://i.imgur.com/gSX6Xlf.jpg",
     "https://i.imgur.com/iP26Hwa.jpg",
     "https://i.imgur.com/uSsJoX8.jpg",
-    "https://i.imgur.com/OvX3oHB.jpg",
-    "https://i.imgur.com/JMWuksm.jpg",
-    "https://i.imgur.com/lhM3fib.jpg",
-    "https://i.imgur.com/64IYKkw.jpg",
-    "https://i.imgur.com/nMbyA3J.jpg",
-    "https://i.imgur.com/7KFQhY3.jpg",
-    "https://i.imgur.com/mlKb7zt.jpg",
-    "https://i.imgur.com/JCQGJVw.jpg",
-    "https://i.imgur.com/hSFYDEz.jpg",
-    "https://i.imgur.com/PQRjAgl.jpg",
-    "https://i.imgur.com/ot9624U.jpg",
-    "https://i.imgur.com/iXmqN9y.jpg",
-    "https://i.imgur.com/RhNBeGr.jpg",
-    "https://i.imgur.com/tcMVNa8.jpg",
-    "https://i.imgur.com/LrVg810.jpg",
-    "https://i.imgur.com/TcWfQlz.jpg",
-    "https://i.imgur.com/muAUdvJ.jpg",
-    "https://i.imgur.com/AtC7ZRV.jpg",
-    "https://i.imgur.com/sCObQCQ.jpg",
-    "https://i.imgur.com/AJFDI1r.jpg",
-    "https://i.imgur.com/TCgmRrH.jpg",
-    "https://i.imgur.com/LMdmhJU.jpg",
-    "https://i.imgur.com/eyyax0N.jpg",
-    "https://i.imgur.com/YtYxV66.jpg",
-    "https://i.imgur.com/292w4ye.jpg",
-    "https://i.imgur.com/6Fm1vdw.jpg",
-    "https://i.imgur.com/2vnBOZd.jpg",
-    "https://i.imgur.com/j5hI9Eb.jpg",
-    "https://i.imgur.com/cAv7pJB.jpg",
-    "https://i.imgur.com/jvI7Vil.jpg",
-    "https://i.imgur.com/fANpjsg.jpg",
-    "https://i.imgur.com/5o1SJyo.jpg",
-    "https://i.imgur.com/dSVxmh8.jpg",
-    "https://i.imgur.com/02dXlAD.jpg",
-    "https://i.imgur.com/htvIoGY.jpg",
-    "https://i.imgur.com/hy6BXOj.jpg",
-    "https://i.imgur.com/OuwzNYu.jpg",
-    "https://i.imgur.com/L8vwvc2.jpg",
-    "https://i.imgur.com/3VMVF9y.jpg",
-    "https://i.imgur.com/yzjq2n2.jpg",
-    "https://i.imgur.com/0qK7TAN.jpg",
-    "https://i.imgur.com/zvcxSOX.jpg",
-    "https://i.imgur.com/FO7bApW.jpg",
-    "https://i.imgur.com/KK06gwg.jpg",
-    "https://i.imgur.com/6lG4tsO.jpg",
-)
-
-ANIMEQUOTES_HANDLER = DisableAbleCommandHandler("animequotes", animequotes)
-QUOTES_HANDLER = DisableAbleCommandHandler("quote", quotes)
-
-CHANGE_QUOTE = CallbackQueryHandler(change_quote, pattern=r"change_.*")
-QUOTE_CHANGE = CallbackQueryHandler(change_quote, pattern=r"quote_.*")
-
-dispatcher.add_handler(CHANGE_QUOTE)
-dispatcher.add_handler(QUOTE_CHANGE)
-dispatcher.add_handler(ANIMEQUOTES_HANDLER)
-dispatcher.add_handler(QUOTES_HANDLER)
-
-__mod_name__ = "Qᴜᴏᴛᴇs"
-__help__ = """
-/quote :- ᴡʀɪᴛᴇ ǫᴜᴏᴛᴇs
-/animequotes :- ᴡʀɪᴛᴇ ᴀɴɪᴍᴇǫᴜᴏᴛᴇs
- """
-
-__command_list__ = [
-    "animequotes",
-    "quote",
 ]
 
-__handlers__ = [
-    ANIMEQUOTES_HANDLER,
-    QUOTES_HANDLER,
-]
+# ───────── SMALL CAPS ─────────
+def to_small_caps(text: str):
+    mapping = {
+        "a":"ᴀ","b":"ʙ","c":"ᴄ","d":"ᴅ","e":"ᴇ","f":"ꜰ","g":"ɢ","h":"ʜ","i":"ɪ","j":"ᴊ",
+        "k":"ᴋ","l":"ʟ","m":"ᴍ","n":"ɴ","o":"ᴏ","p":"ᴘ","q":"ǫ","r":"ʀ","s":"s","t":"ᴛ",
+        "u":"ᴜ","v":"ᴠ","w":"ᴡ","x":"x","y":"ʏ","z":"ᴢ",
+        "A":"ᴀ","B":"ʙ","C":"ᴄ","D":"ᴅ","E":"ᴇ","F":"ꜰ","G":"ɢ","H":"ʜ","I":"ɪ","J":"ᴊ",
+        "K":"ᴋ","L":"ʟ","M":"ᴍ","N":"ɴ","O":"ᴏ","P":"ᴘ","Q":"ǫ","R":"ʀ","S":"s","T":"ᴛ",
+        "U":"ᴜ","V":"ᴠ","W":"ᴡ","X":"x","Y":"ʏ","Z":"ᴢ"
+    }
+    return "".join(mapping.get(c, c) for c in text)
+
+# ───────── FETCH RANDOM QUOTE ─────────
+def anime_quote():
+    try:
+        response = requests.get("https://animechan.vercel.app/api/random").json()
+        return response["quote"], response["character"], response["anime"]
+    except Exception:
+        return "❝Error fetching quote❞", "Unknown", "Unknown"
+
+# ───────── COMMAND: /quote ─────────
+@app.on_message(filters.command("quote") & filters.group)
+async def quotes(client, message: Message):
+    quote, character, anime = anime_quote()
+    msg_text = f"<i>❝{quote}❞</i>\n\n<b>{to_small_caps(character)} from {to_small_caps(anime)}</b>"
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="ᴄʜᴀɴɢᴇ 🔁", callback_data="change_quote")]]
+    )
+    await message.reply_text(msg_text, reply_markup=keyboard)
+
+# ───────── INLINE BUTTON CALLBACK ─────────
+@app.on_callback_query(filters.regex("change_quote"))
+async def change_quote(client, callback):
+    quote, character, anime = anime_quote()
+    msg_text = f"<i>❝{quote}❞</i>\n\n<b>{to_small_caps(character)} from {to_small_caps(anime)}</b>"
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="ᴄʜᴀɴɢᴇ 🔁", callback_data="change_quote")]]
+    )
+    await callback.message.edit_text(msg_text, reply_markup=keyboard)
+    await callback.answer()
+
+# ───────── COMMAND: /animequotes (random anime pics) ─────────
+@app.on_message(filters.command("animequotes") & filters.group)
+async def animequotes(client, message: Message):
+    img_url = random.choice(QUOTES_IMG)
+    await message.reply_photo(img_url, caption=f"ᴄʜᴏsᴇɴ ʙʏ {to_small_caps(message.from_user.first_name)}")
