@@ -8,7 +8,6 @@ import requests
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from Oneforall import BOT_USERNAME, OWNER_ID, BOT_NAME, SUPPORT_CHAT
 from Oneforall import app
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -188,24 +187,24 @@ async def create_logo(client: Client, message: Message):
         await app.send_photo(
             chat_id=message.chat.id,
             file=fname,
-            caption=f"""━━━━━━━{BOT_NAME}━━━━━━━
+            caption=f"""━━━━━━━˹ ʀσꜱʜηɪ ✗ ϻᴜꜱɪᴄ ˼ [🇮🇳]━━━━━━━
 
 ☘️ ʟᴏɢᴏ ᴄʀᴇᴀᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ☘️
 ◈──────────────◈
-🔥 ᴄʀᴇᴀᴛᴇᴅ ʙʏ : @{BOT_USERNAME}
-━━━━━━━{BOT_NAME}━━━━━━━""",
+🔥 ᴄʀᴇᴀᴛᴇᴅ ʙʏ : @roshni_x_music_bot
+━━━━━━━˹ ʀσꜱʜηɪ ✗ ϻᴜꜱɪᴄ ˼ [🇮🇳]━━━━━━━""",
             buttons=button_row
         )
         await loading_msg.delete()
         os.remove(fname)
     except Exception as e:
-        await message.reply(f"ᴇʀʀᴏʀ: {e}\nReport to @{SUPPORT_CHAT}")
+        await message.reply(f"ᴇʀʀᴏʀ: {e}\nReport to @snowy_hometown")
 
 # ───────── MODULE INFO ─────────
 __mod_name__ = "Lᴏɢᴏ"
 
 __help__ = f"""
-@{BOT_USERNAME} ᴄᴀɴ ᴄʀᴇᴀᴛᴇ ʙᴇᴀᴜᴛɪғᴜʟ ʟᴏɢᴏs.
+@roshni_x_music_bot ᴄᴀɴ ᴄʀᴇᴀᴛᴇ ʙᴇᴀᴜᴛɪғᴜʟ ʟᴏɢᴏs.
 
 ❍ /logo <Text> : ᴄʀᴇᴀᴛᴇ ᴀ ʟᴏɢᴏ ᴏғ ʏᴏᴜʀ ɢɪᴠᴇɴ ᴛᴇxᴛ ᴡɪᴛʜ ʀᴀɴᴅᴏᴍ ʙᴀᴄᴋɢʀᴏᴜɴᴅ.
 """
