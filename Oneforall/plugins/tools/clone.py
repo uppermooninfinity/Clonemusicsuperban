@@ -143,7 +143,7 @@ async def clone_play(_, message):
     try:
         await message.reply_text("❖ ᴘʟᴧʏɪηɢ ꜱσϻєᴛʜɪηɢ ʙєᴧᴜᴛɪғᴜʟ ғσʀ ʏσᴜ 💗")
         await play_music(
-            userbot=userbot,
+            userbot=us,
             chat_id=message.chat.id,
             query=" ".join(message.command[1:]),
             requested_by=message.from_user.id,
