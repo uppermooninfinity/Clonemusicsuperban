@@ -25,6 +25,9 @@ from config import (
     SUPPORT_CHAT,
     CLONE_LOGGER,
 )
+from Oneforall.utils.player import init_pytgcalls
+
+init_pytgcalls(us)
 
 log = logging.getLogger(__name__)
 CLONES: set[int] = set()
