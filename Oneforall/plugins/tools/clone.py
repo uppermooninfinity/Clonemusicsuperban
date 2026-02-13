@@ -33,7 +33,7 @@ CLONES: set[int] = set()
 
 C_BOT_DESC = (
     "🩷Wᴀɴᴛ ᴀ ʙᴏᴛ ʟɪᴋᴇ ᴛʜɪs? Cʟᴏɴᴇ ɪᴛ ɴᴏᴡ! ✅\n\n"
-    "🔍Vɪsɪᴛ: @superban_probot\n"
+    "🔍Vɪsɪᴛ: @snowy_x_music_bot\n"
     "📽️Sᴜᴘᴘᴏʀᴛ: @snowy_hometown"
 )
 
