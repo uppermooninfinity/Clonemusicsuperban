@@ -39,7 +39,7 @@ async def create_logo(client: Client, message: Message):
     text = message.text.split(maxsplit=1)
     if len(text) < 2 or not text[1]:
         await message.reply(
-            "`ɢɪᴠᴇ sᴏᴍᴇ ᴛᴇxᴛ ᴛᴏ ᴄʀᴇᴀᴛᴇ ʟᴏɢᴏ!\nExample: /logo Nobita`"
+            "`ɢɪᴠᴇ sᴏᴍᴇ ᴛᴇxᴛ ᴛᴏ ᴄʀᴇᴀᴛᴇ ʟᴏɢᴏ!\nExample: /logo (text you want on the image)`"
         )
         return
 
