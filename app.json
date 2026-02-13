@@ -14,12 +14,12 @@
   "env": {
     "API_ID": {
       "description": "Get this value from https://my.telegram.org",
-      "value": "26950458",
+      "value": "34594672",
       "required": true
     },
     "API_HASH": {
       "description": "Get this value from https://my.telegram.org",
-      "value": "d818b8d530e4a9b209509815ab1b9c7c",
+      "value": "a008e5018b8662e872be5a8670db4840",
       "required": true
     },
     "BOT_TOKEN": {
@@ -49,7 +49,7 @@
     },
     "LOGGER_ID": {
       "description": "Technical logs group ID (bot must be admin).",
-      "value": "-1003228624224",
+      "value": "-1003748760283",
       "required": true
     },
     "YOUTUBE_API_KEY": {
@@ -59,7 +59,7 @@
     },
     "UPSTREAM_REPO": {
       "description": "GitHub repository URL used for upstream auto updates (fork source repo)",
-      "value": "https://github.com/uppermooninfinity/MusicXsuperban",
+      "value": "https://github.com/uppermooninfinity/Clonemusicsuperban",
       "required": false
     },
     "HEROKU_API_KEY": {
