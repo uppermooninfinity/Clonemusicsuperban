@@ -21,6 +21,9 @@ GIT_TOKEN = getenv("GIT_TOKEN", None)
 
 MONGO_DB_URI = getenv("MONGO_DB_URI", "")
 
+CLONE_LOGGER = LOGGER_ID
+
+
 MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "")
 PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", None)
 
@@ -37,7 +40,7 @@ GBAN_LOG_CHAT = int(getenv("GBAN_LOG_CHAT", "0"))
 
 OWNER_ID = getenv("OWNER_ID", "")
 SUDO_USERS = getenv("SUDO_USERS", "")
-BIO_LOG_CHANNEL = getenv("BIO_LOG_CHANNEL", "-1003852280111")
+BIO_LOG_CHANNEL = getenv("BIO_LOG_CHANNEL", "-1003634796457")
 # ===== HEROKU =====
 
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
