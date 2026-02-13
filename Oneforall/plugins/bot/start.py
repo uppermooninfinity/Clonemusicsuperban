@@ -153,7 +153,7 @@ async def welcome(client, message: Message):
 
             if isinstance(SUDOERS, int): 
                 if member.id == SUDOERS:
-                    AMBOT = f"#Sudo_User\n\n 𝙎𝙩𝙖𝙮 𝘼𝙡𝙚𝙧𝙩 ⚠️\n\n𝗢𝗙 {app.mention} 𝗦𝗨𝗗𝗢 𝗨𝗦𝗘𝗥 {member.mention} just joined the group <code>{message.chat.title}</code>.\n\n𝗦𝘂𝗽𝗽𝗼𝗿𝘁 𝗠𝗲 𝗛𝗲𝗿𝗲 👇🏻🤭💕\n\n┏━━━━━━━━━━━━┓\n┣★ 𝗨𝗽𝗱𝗮𝘁𝗲 -: @Buyer_infinity  \n┣★ 𝗨𝗽𝗱𝗮𝘁𝗲 -: @Destiny_Infinity_Og \n┣★ 𝗦𝘂𝗽𝗽𝗼𝗿𝘁 -: @Bots_Are_Alive \n┣★ 𝗕𝗼𝘁 𝗨𝗦𝗘𝗥𝗡𝗔𝗠𝗘 -: @{app.username}\n┣★ 𝗦𝘂𝗽𝗲𝗿𝗯𝗮𝗻 𝗟𝗼𝗴𝘀 -: @who_cares_qt\n┣★ 𝙒𝙝𝙤 𝙘𝙖𝙧𝙚𝙨 𝙗𝙖𝙗𝙮 -: @positive_thinking135\n┣★ ᴘᴏꜱɪᴛɪᴠɪᴛʏ ᴋɪ ᴅᴜɴɪʏᴀ 𝗝𝗼𝗶𝗻 𝗛𝗲𝗿𝗲 -:<code> </code>."
+                    AMBOT = f"#Sudo_User\n\n 𝙎𝙩𝙖𝙮 𝘼𝙡𝙚𝙧𝙩 ⚠️\n\n𝗢𝗙 {app.mention} 𝗦𝗨𝗗𝗢 𝗨𝗦𝗘𝗥 {member.mention} just joined the group <code>{message.chat.title}</code>.\n\n𝗦𝘂𝗽𝗽𝗼𝗿𝘁 𝗠𝗲 𝗛𝗲𝗿𝗲 👇🏻🤭💕\n\n┏━━━━━━━━━━━━┓\n┣★ 𝗨𝗽𝗱𝗮𝘁𝗲 -: @Buyer_infinity  \n┣★ 𝗨𝗽𝗱𝗮𝘁𝗲 -: @Destiny_Infinity_Og \n┣★ 𝗦𝘂𝗽𝗽𝗼𝗿𝘁 -: @Bots_Are_Alive \n┣★ 𝗕𝗼𝘁 𝗨𝗦𝗘𝗥𝗡𝗔𝗠𝗘 -: @{app.username}\n┣★ 𝗦𝘂𝗽𝗲𝗿𝗯𝗮𝗻 𝗟𝗼𝗴𝘀 -: @who_cares_qt\n┣★ 𝙒𝙝𝙤 𝙘𝙖𝙧𝙚𝙨 𝙗𝙖𝙗𝙮 -: @positive_thinking135\n┣★ ᴘᴏꜱɪᴛɪᴠɪᴛʏ ᴋɪ ᴅᴜɴɪʏᴀ 𝗝𝗼𝗶𝗻 𝗛𝗲𝗿𝗲 -:<code> </code>"
                     sent_message = await message.reply_text(AMBOT, reply_markup=buttons)
                     await asyncio.sleep(60)
                     await sent_message.delete()  
@@ -161,7 +161,7 @@ async def welcome(client, message: Message):
 
             elif isinstance(SUDOERS, (list, set)):
                 if member.id in SUDOERS:
-                    AMBOT = f"#Sudo_User\n\n 𝙎𝙩𝙖𝙮 𝘼𝙡𝙚𝙧𝙩 ⚠️\n\n𝗢𝗙 {app.mention} 𝗦𝗨𝗗𝗢 𝗨𝗦𝗘𝗥 {member.mention} just joined the group <code>{message.chat.title}</code>.\n\n𝗦𝘂𝗽𝗽𝗼𝗿𝘁 𝗠𝗲 𝗛𝗘𝗥𝗘 👇🏻🤭💕\n\n┏━━━━━━━━━━━━┓\n┣★ 𝗨𝗽𝗱𝗮𝘁𝗲 -: @Destiny_Infinity_Og  \n┣★ 𝗨𝗽𝗱𝗮𝘁𝗲 -:  \n┣★ 𝗦𝘂𝗽𝗽𝗼𝗿𝘁 -: @Bots_Are_Alive \n┣★ 𝗕𝗢𝗧 𝗨𝗦𝗘𝗥𝗡𝗔𝗠𝗘 -: @{app.username}\n┣★ 𝗦𝘂𝗽𝗲𝗿𝗕𝗮𝗻 𝗟𝗢𝗚𝗦 -: A\n┣★ Infinity_bots -: @positive_thinking135\n┣★ 𝗝𝗼𝗶𝗻 𝗛𝗲𝗿𝗲 -:<code></code>."
+                    AMBOT = f"#Sudo_User\n\n 𝙎𝙩𝙖𝙮 𝘼𝙡𝙚𝙧𝙩 ⚠️\n\n𝗢𝗙 {app.mention} 𝗦𝗨𝗗𝗢 𝗨𝗦𝗘𝗥 {member.mention} just joined the group <code>{message.chat.title}</code>.\n\n𝗦𝘂𝗽𝗽𝗼𝗿𝘁 𝗠𝗲 𝗛𝗘𝗥𝗘 👇🏻🤭💕\n\n┏━━━━━━━━━━━━┓\n┣★ 𝗨𝗽𝗱𝗮𝘁𝗲 -: @Destiny_Infinity_Og  \n┣★ 𝗨𝗽𝗱𝗮𝘁𝗲 -:  \n┣★ 𝗦𝘂𝗽𝗽𝗼𝗿𝘁 -: @Bots_Are_Alive \n┣★ 𝗕𝗢𝗧 𝗨𝗦𝗘𝗥𝗡𝗔𝗠𝗘 -: @{app.username}\n┣★ 𝗦𝘂𝗽𝗲𝗿𝗕𝗮𝗻 𝗟𝗢𝗚𝗦 -: A\n┣★ Infinity_bots -: @positive_thinking135\n┣★ 𝗝𝗼𝗶𝗻 𝗛𝗲𝗿𝗲 -:<code></code>"
                     sent_message = await message.reply_text(AMBOT, reply_markup=buttons)
                     await asyncio.sleep(60)
                     await sent_message.delete()  
