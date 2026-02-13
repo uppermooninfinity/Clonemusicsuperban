@@ -2,7 +2,13 @@ from pytgcalls import PyTgCalls
 from pytgcalls.types import AudioPiped
 import yt_dlp
 
-pytgcalls = PyTgCalls(userbot)  # initialize
+pytgcalls = None  # will initialize later
+
+
+def init_pytgcalls(userbot):
+    global pytgcalls
+    pytgcalls = PyTgCalls(userbot)
+
 
 async def extract_audio(query):
     ydl_opts = {
@@ -14,9 +20,11 @@ async def extract_audio(query):
         info = ydl.extract_info(query, download=True)
         return ydl.prepare_filename(info)
 
+
 async def join_vc(chat_id):
     if not pytgcalls.is_connected(chat_id):
         await pytgcalls.join_group_call(chat_id, AudioPiped("silent.mp3"))
+
 
 async def pytgcalls_stream(chat_id, file_path):
     await pytgcalls.change_stream(
