@@ -58,6 +58,36 @@ async def help_com_group(client, message: Message, _):
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
 
+@app.on_callback_query(filters.regex("^help_callback cbot$"))
+async def help_cbot_handler(_, query: CallbackQuery):
+
+    text = """
+━━━━━━━━━━━━━━━━━━
+🤖 ᴄʟᴏɴᴇ ʏᴏᴜʀ ᴏᴡɴ ᴍᴜsɪᴄ ʙᴏᴛ
+━━━━━━━━━━━━━━━━━━
+
+➊ Go to @BotFather  
+➋ Send /newbot  
+➌ Create bot name & username  
+➍ Copy the BOT TOKEN  
+
+➎ Now go to @roshni_x_music_bot  
+➏ Send:
+
+   /clone YOUR_BOT_TOKEN
+
+Example:
+   /clone 123456:ABC-XYZ
+
+➐ Wait for deployment ⏳
+
+━━━━━━━━━━━━━━━━━━
+✨ Your personal music bot will be ready!
+━━━━━━━━━━━━━━━━━━
+"""
+
+    await query.message.edit_text(text)
+    await query.answer()
 
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
 @languageCB
