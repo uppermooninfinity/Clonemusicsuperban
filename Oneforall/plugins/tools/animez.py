@@ -19,6 +19,7 @@ button_row = InlineKeyboardMarkup(
 )
 
 # ───────── LOGO LINKS ─────────
+LOGO_LINKS = [  
     "https://telegra.ph/file/fc7fbefe92599bd79d038.jpg",
     "https://telegra.ph/file/b88d6e78e206eb73e2e54.jpg",
     "https://telegra.ph/file/48f8c62829953e82441e8.jpg",
