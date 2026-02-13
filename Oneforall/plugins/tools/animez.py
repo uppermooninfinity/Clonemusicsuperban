@@ -8,7 +8,8 @@ import requests
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from Oneforall import telethn, BOT_USERNAME, OWNER_ID, BOT_NAME, SUPPORT_CHAT
+from Oneforall import BOT_USERNAME, OWNER_ID, BOT_NAME, SUPPORT_CHAT
+from Oneforall import app
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 button_row = InlineKeyboardMarkup(
@@ -184,7 +185,7 @@ async def create_logo(client: Client, message: Message):
         # Save and send
         fname = "roshnilogos.png"
         img.save(fname, "PNG")
-        await telethn.send_file(
+        await app.send_photo(
             chat_id=message.chat.id,
             file=fname,
             caption=f"""━━━━━━━{BOT_NAME}━━━━━━━
