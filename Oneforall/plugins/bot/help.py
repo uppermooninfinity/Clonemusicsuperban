@@ -86,17 +86,6 @@ Example:
 ✨ Your personal music bot will be ready!
 ━━━━━━━━━━━━━━━━━━
 """
-keyboard = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton(
-                text=_["BACK_BUTTON"],
-                callback_data="settings_back_helper",
-            ),
-        ]
-    ]
-)
-
     await query.message.edit_text(text)
     await query.answer()
 
