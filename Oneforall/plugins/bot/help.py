@@ -2,6 +2,7 @@ from typing import Union
 
 from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from pyrogram.types import CallbackQuery
 
 from config import BANNED_USERS, SUPPORT_CHAT
 from Oneforall import app
