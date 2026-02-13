@@ -408,6 +408,7 @@ async def play_commnd(
                 await mystic.delete()
                 await message.reply_photo(
                     photo=details["thumb"],
+                    has_spoiler=true,
                     caption=_["play_10"].format(
                         details["title"].title(),
                         details["duration_min"],
