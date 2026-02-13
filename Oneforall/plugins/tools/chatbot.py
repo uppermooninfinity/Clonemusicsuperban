@@ -2,22 +2,17 @@ import os
 import aiohttp
 import asyncio
 from logging import getLogger
-from pyrogram import Client, filters
+from pyrogram import filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from dotenv import load_dotenv
-
 from Oneforall import app
 
-# ───────── LOAD ENV ─────────
-load_dotenv()
-DEESEEK_API_KEY = os.getenv("DEESEEK_API_KEY")
-DEESEEK_CHAT_URL = "https://api.deepseek.ai/chat"
-
 LOGGER = getLogger(__name__)
-prefixes = [".", "!", "/", "@", "?", "'"]
+
+DEESEEK_API_KEY = os.getenv("DEESEEK_API_KEY")
 
 # ───────── STATE ─────────
 chatbot_status = {}  # chat_id -> bool
+TRIGGER_WORDS = ["hi", "hello", "kaise ho", "how are you", "roshni"]
 
 # ───────── SMALL CAPS ─────────
 def to_small_caps(text: str):
@@ -31,14 +26,10 @@ def to_small_caps(text: str):
     }
     return "".join(mapping.get(c, c) for c in text)
 
-# ───────── TRIGGER WORDS ─────────
-TRIGGER_WORDS = ["hi", "hello", "kaise ho", "how are you", "roshni"]
-
 # ───────── COMMAND: TOGGLE CHATBOT ─────────
-@app.on_message(filters.command("chatbot", prefixes=prefixes) & filters.group)
+@app.on_message(filters.command("chatbot") & filters.group)
 async def chatbot_toggle(_, message: Message):
     chat_id = message.chat.id
-
     keyboard = InlineKeyboardMarkup(
         [
             [
@@ -47,57 +38,49 @@ async def chatbot_toggle(_, message: Message):
             ]
         ]
     )
-
     status = chatbot_status.get(chat_id, False)
     await message.reply(
-        f"🤖 <b>DeepSeek ChatBot Status:</b> <b>{to_small_caps(str(status))}</b>",
+        f"🤖 <b>ChatBot Status:</b> <b>{to_small_caps(str(status))}</b>",
         reply_markup=keyboard
     )
 
 # ───────── CALLBACK HANDLER ─────────
 @app.on_callback_query()
-async def chatbot_callback(client: Client, callback: CallbackQuery):
+async def chatbot_callback(_, callback: CallbackQuery):
     data = callback.data
     chat_id = int(data.split(":")[1])
-
     if data.startswith("chatbot_enable"):
         chatbot_status[chat_id] = True
         await callback.answer("✅ Chatbot Enabled")
-        await callback.message.edit(f"<blockquote>🤖 <b><u>ChatBot is now ON</u></b></blockquote>")
+        await callback.message.edit(f"🤖 <b>ChatBot is now ON</b>")
     elif data.startswith("chatbot_disable"):
         chatbot_status[chat_id] = False
         await callback.answer("❌ Chatbot Disabled")
-        await callback.message.edit(f"<blockquote>🤖 <b><u>ChatBot is now ON</u></b></blockquote>")
+        await callback.message.edit(f"🤖 <b>ChatBot is now OFF</b>")
 
 # ───────── CHATBOT RESPONSE ─────────
 @app.on_message(filters.group & filters.text)
 async def chatbot_response(_, message: Message):
     chat_id = message.chat.id
-    user_id = message.from_user.id
-
-    # Only respond if enabled
     if not chatbot_status.get(chat_id, False):
         return
-
-    # Don't respond to bots
     if message.from_user.is_bot:
         return
 
-    # Check for trigger words
     msg_text = message.text.lower()
     if not any(word in msg_text for word in TRIGGER_WORDS):
         return
 
     try:
         async with aiohttp.ClientSession() as session:
-            payload = {"message": message.text}
             headers = {"Authorization": f"Bearer {DEESEEK_API_KEY}"}
-            async with session.post(DEESEEK_CHAT_URL, json=payload, headers=headers) as resp:
+            payload = {"message": message.text}
+            async with session.post("https://api.deepseek.ai/chat", json=payload, headers=headers) as resp:
                 if resp.status == 200:
                     data = await resp.json()
-                    reply = data.get("reply") or "🤖 Sorry, I couldn't generate a reply."
+                    reply = data.get("reply", "🤖 Sorry, I couldn't generate a reply.")
                     await message.reply(reply)
                 else:
-                    LOGGER.error(f"DeepSeek Chat API Error: {resp.status}")
+                    LOGGER.error(f"ChatBot API Error: {resp.status}")
     except Exception as e:
-        LOGGER.error(f"Chatbot Error: {e}")
+        LOGGER.error(f"ChatBot Error: {e}")
