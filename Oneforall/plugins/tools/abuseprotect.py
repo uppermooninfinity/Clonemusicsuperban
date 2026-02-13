@@ -1,13 +1,13 @@
 import asyncio
-from datetime import datetime
 from logging import getLogger
-from typing import Dict, Set, List
+from typing import Dict, Set
 
 from pyrogram import filters
 from pyrogram.types import Message
 
-from Oneforall import app
+from Oneforall import app, OWNER_ID
 from Oneforall.core.mongo import mongodb
+from Oneforall.core.config import SUDO_USERS  # change path if needed
 
 LOGGER = getLogger(__name__)
 
@@ -15,42 +15,42 @@ LOGGER = getLogger(__name__)
 prefixes = [".", "!", "/", "@", "?", "'"]
 
 # ───────── STATE ─────────
-abuse_protect_status: Dict[int, bool] = {}  # Group ID -> Enabled/Disabled
-abuse_words: Dict[int, Set[str]] = {}       # Group ID -> Set of abusive words
+abuse_protect_status: Dict[int, bool] = {}  # group enable/disable
+GLOBAL_ABUSE_WORDS: Set[str] = set()       # global word list
 
 abusedb = mongodb.abuseprotect
 
-# ───────── SMALL CAPS ─────────
-def to_small_caps(text: str):
-    mapping = {
-        "a":"ᴀ","b":"ʙ","c":"ᴄ","d":"ᴅ","e":"ᴇ","f":"ꜰ","g":"ɢ","h":"ʜ","i":"ɪ","j":"ᴊ",
-        "k":"ᴋ","l":"ʟ","m":"ᴍ","n":"ɴ","o":"ᴏ","p":"ᴘ","q":"ǫ","r":"ʀ","s":"s","t":"ᴛ",
-        "u":"ᴜ","v":"ᴠ","w":"ᴡ","x":"x","y":"ʏ","z":"ᴢ",
-        "A":"ᴀ","B":"ʙ","C":"ᴄ","D":"ᴅ","E":"ᴇ","F":"ꜰ","G":"ɢ","H":"ʜ","I":"ɪ","J":"ᴊ",
-        "K":"ᴋ","L":"ʟ","M":"ᴍ","N":"ɴ","O":"ᴏ","P":"ᴘ","Q":"ǫ","R":"ʀ","S":"s","T":"ᴛ",
-        "U":"ᴜ","V":"ᴠ","W":"ᴡ","X":"x","Y":"ʏ","Z":"ᴢ"
-    }
-    return "".join(mapping.get(c, c) for c in text)
+# ───────── PERMISSION CHECK ─────────
+def is_authorized(user_id: int) -> bool:
+    return user_id == OWNER_ID or user_id in SUDO_USERS
 
-# ───────── DATABASE HANDLING ─────────
+# ───────── DATABASE LOAD ─────────
 async def load_abuseprotect_status():
-    async for doc in abusedb.find({}):
-        chat_id = doc["chat_id"]
-        abuse_protect_status[chat_id] = doc.get("status", False)
-        abuse_words[chat_id] = set(doc.get("words", []))
+    # Load global words
+    doc = await abusedb.find_one({"_id": "global"})
+    if doc:
+        GLOBAL_ABUSE_WORDS.update(doc.get("words", []))
 
-async def save_abuseprotect(chat_id: int):
+    # Load group status
+    async for doc in abusedb.find({"_id": {"$ne": "global"}}):
+        abuse_protect_status[doc["_id"]] = doc.get("status", False)
+
+# ───────── SAVE FUNCTIONS ─────────
+async def save_global_words():
     await abusedb.update_one(
-        {"chat_id": chat_id},
-        {"$set": {
-            "chat_id": chat_id,
-            "status": abuse_protect_status.get(chat_id, False),
-            "words": list(abuse_words.get(chat_id, []))
-        }},
+        {"_id": "global"},
+        {"$set": {"words": list(GLOBAL_ABUSE_WORDS)}},
         upsert=True
     )
 
-# ───────── COMMAND: ABUSE PROTECT ─────────
+async def save_group_status(chat_id: int):
+    await abusedb.update_one(
+        {"_id": chat_id},
+        {"$set": {"status": abuse_protect_status.get(chat_id, False)}},
+        upsert=True
+    )
+
+# ───────── ABUSE PROTECT COMMAND ─────────
 @app.on_message(filters.command("abuseprotect", prefixes=prefixes) & filters.group)
 async def abuseprotect_command(_, message: Message):
     chat_id = message.chat.id
@@ -58,78 +58,94 @@ async def abuseprotect_command(_, message: Message):
 
     if len(args) == 1:
         status = abuse_protect_status.get(chat_id, False)
-        words = abuse_words.get(chat_id, set())
-        words_list = ", ".join(words) if words else "None"
-        await message.reply(
-            f"🔒 <b>ᴀʙᴜѕᴇ ᴘʀσᴛᴇᴄᴛ ꜱᴛᴀᴛᴜѕ:</b> <b>{to_small_caps(str(status))}</b>\n\n"
-            f"📜 <b>ᴡᴏʀᴅꜱ ʟɪꜱᴛ:</b> {words_list}\n\n"
-            "♡ <code>/abuseprotect on</code>\n"
-            "♡ <code>/abuseprotect off</code>\n"
-            "♡ <code>/abuseadd [word]</code>\n"
-            "♡ <code>/abuseremove [word]</code>"
+        words_list = ", ".join(GLOBAL_ABUSE_WORDS) if GLOBAL_ABUSE_WORDS else "None"
+        return await message.reply(
+            f"🔒 Abuse Protect: <b>{status}</b>\n\n"
+            f"📜 Global Words: {words_list}\n\n"
+            "Commands:\n"
+            "/abuseprotect on\n"
+            "/abuseprotect off\n"
+            "/abuseadd word\n"
+            "/abuseremove word"
         )
-        return
 
     arg = args[1].lower()
+
     if arg in ("on", "enable", "yes"):
         abuse_protect_status[chat_id] = True
-        await save_abuseprotect(chat_id)
-        await message.reply("✅ <b>ᴀʙᴜѕᴇ ᴘʀσᴛᴇᴄᴛ ᴇɴᴀʙʟᴇᴅ ✨</b>")
+        await save_group_status(chat_id)
+        await message.reply("✅ Abuse Protect Enabled ✨")
+
     elif arg in ("off", "disable", "no"):
         abuse_protect_status[chat_id] = False
-        await save_abuseprotect(chat_id)
-        await message.reply("🚫 <b>ᴀʙᴜѕᴇ ᴘʀσᴛᴇᴄᴛ ᴅɪꜱᴀʙʟᴇᴅ</b>")
+        await save_group_status(chat_id)
+        await message.reply("🚫 Abuse Protect Disabled")
 
-# ───────── COMMANDS: ADD / REMOVE WORDS ─────────
-@app.on_message(filters.command("abuseadd", prefixes=prefixes) & filters.group)
+# ───────── ADD WORD ─────────
+@app.on_message(filters.command("abuseadd", prefixes=prefixes))
 async def abuseadd_command(_, message: Message):
-    chat_id = message.chat.id
+
+    if not is_authorized(message.from_user.id):
+        return await message.reply("🚫 Only Owner & Sudo Users Can Add Words.")
+
     if len(message.command) < 2:
-        return await message.reply("❌ <b>Usage: /abuseadd [word]</b>")
+        return await message.reply("Usage: /abuseadd word")
 
     word = message.command[1].lower()
-    abuse_words.setdefault(chat_id, set()).add(word)
-    await save_abuseprotect(chat_id)
-    await message.reply(f"✅ <b>Word '{word}' added to abuse protect list ✨</b>")
 
-@app.on_message(filters.command("abuseremove", prefixes=prefixes) & filters.group)
+    GLOBAL_ABUSE_WORDS.add(word)
+    await save_global_words()
+
+    await message.reply(f"✅ Word '{word}' added globally ✨")
+
+# ───────── REMOVE WORD ─────────
+@app.on_message(filters.command("abuseremove", prefixes=prefixes))
 async def abuseremove_command(_, message: Message):
-    chat_id = message.chat.id
+
+    if not is_authorized(message.from_user.id):
+        return await message.reply("🚫 Only Owner & Sudo Users Can Remove Words.")
+
     if len(message.command) < 2:
-        return await message.reply("❌ <b>Usage: /abuseremove [word]</b>")
+        return await message.reply("Usage: /abuseremove word")
 
     word = message.command[1].lower()
-    abuse_words.setdefault(chat_id, set()).discard(word)
-    await save_abuseprotect(chat_id)
-    await message.reply(f"✅ <b>Word '{word}' removed from abuse protect list ✨</b>")
+
+    GLOBAL_ABUSE_WORDS.discard(word)
+    await save_global_words()
+
+    await message.reply(f"✅ Word '{word}' removed globally ✨")
 
 # ───────── MESSAGE CHECK ─────────
 @app.on_message(filters.group)
 async def abuse_check(_, message: Message):
+
     chat_id = message.chat.id
+
     if not abuse_protect_status.get(chat_id, False):
         return
 
-    text = message.text.lower() if message.text else ""
-    words = abuse_words.get(chat_id, set())
-    if any(word in text for word in words):
+    if not message.text:
+        return
+
+    text = message.text.lower()
+
+    if any(word in text for word in GLOBAL_ABUSE_WORDS):
         try:
             await message.delete()
-            warn_text = (
-                f"⚠️ <b>ᴀʙᴜѕɪᴠᴇ ᴡᴏʀᴅ ᴅᴇᴛᴇᴄᴛᴇᴅ ✨</b>\n"
-                f"👤 {to_small_caps(message.from_user.first_name)}"
+            warn = await message.reply(
+                f"⚠️ Abusive word detected!\n"
+                f"User: {message.from_user.mention}"
             )
-            warn_msg = await message.reply(warn_text)
-            asyncio.create_task(delete_after_delay(warn_msg, 7))
+            asyncio.create_task(delete_after_delay(warn, 7))
         except Exception as e:
             LOGGER.error(f"Abuse Delete Error: {e}")
 
-# ───────── UTIL ─────────
+# ───────── AUTO DELETE WARN ─────────
 async def delete_after_delay(msg, delay: int):
     try:
         await asyncio.sleep(delay)
         await msg.delete()
-    except Exception:
+    except:
         pass
 
 # ───────── INIT ─────────
