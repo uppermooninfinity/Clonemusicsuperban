@@ -202,9 +202,3 @@ async def back_to_main_menu(client, callback_query: CallbackQuery):
         reply_markup=reply_markupes,
     )
 
-
-@app.on_message(
-    filters.command(["delallsudo"], prefixes=["/", "!", "%", ",", "", ".", "@", "#"])
-    & filters.user(OWNER_ID)
-)
-@language
