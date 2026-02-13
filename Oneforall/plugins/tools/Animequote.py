@@ -7,26 +7,14 @@ from Oneforall import app
 
 # ───────── QUOTES IMAGES ─────────
 QUOTES_IMG = [
-    "https://i.imgur.com/Iub4RYj.jpg",
-    "https://i.imgur.com/uvNMdIl.jpg",
-    "https://i.imgur.com/YOBOntg.jpg",
-    "https://i.imgur.com/fFpO2ZQ.jpg",
-    "https://i.imgur.com/f0xZceK.jpg",
-    "https://i.imgur.com/RlVcCip.jpg",
-    "https://i.imgur.com/CjpqLRF.jpg",
-    "https://i.imgur.com/8BHZDk6.jpg",
-    "https://i.imgur.com/8bHeMgy.jpg",
-    "https://i.imgur.com/5K3lMvr.jpg",
-    "https://i.imgur.com/NTzw4RN.jpg",
-    "https://i.imgur.com/wJxryAn.jpg",
-    "https://i.imgur.com/9L0DWzC.jpg",
-    "https://i.imgur.com/sBe8TTs.jpg",
-    "https://i.imgur.com/1Au8gdf.jpg",
-    "https://i.imgur.com/28hFQeU.jpg",
-    "https://i.imgur.com/Qvc03JY.jpg",
-    "https://i.imgur.com/gSX6Xlf.jpg",
-    "https://i.imgur.com/iP26Hwa.jpg",
-    "https://i.imgur.com/uSsJoX8.jpg",
+    "https://graph.org/file/42304defef005c8769ec8-1db22d423d63bfa361.jpg",
+    "https://graph.org/file/0b190f1ff31b063b701e6-005e2b13b1fe387308.jpg",
+    "https://graph.org/file/b92285ff7a0e976d346fd-112467a5677580da52.jpg",
+    "https://graph.org/file/48b35b306853f131a716c-c2f0e4b0718f30afe3.jpg",
+    "https://graph.org/file/84aa9a94de7287d1573b1-598d0e289e60afd92f.jpg",
+    "https://graph.org/file/1bd47c3763b1c004ddc10-cb0757be9d313b635b.jpg",
+    "https://graph.org/file/225096f95b937a035389c-b74b4c798d728139cf.jpg",
+    "https://graph.org/file/37a6ad6b1fe9d63095d29-6dbe88235da95d9f4e.jpg",
 ]
 
 # ───────── SMALL CAPS ─────────
