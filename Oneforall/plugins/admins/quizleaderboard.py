@@ -61,15 +61,12 @@ async def send_leaderboard(chat_id: int, manual=False):
     if not top_users:
         msg = await app.send_message(chat_id, "🏆 **No quiz stats yet! Play some quizzes first.**")
     else:
-        text = "🏆 **QUIZ LEADERBOARD** (Top 10)
-
-"
+        text = "🏆 **QUIZ LEADERBOARD** (Top 10)"
         for i, user in enumerate(top_users, 1):
             name = user.get("username", f"ID {user['user_id']}")
             score = user["correct_count"]
             emoji = "🥇🥈🥉"[i-1] if i <= 3 else f"{i}."
-            text += f"{emoji} **{name}** → `{score}` ✅
-"
+            text += f"{emoji} **{name}** → `{score}` ✅"
         
         # 🎥 Try video first
         try:
