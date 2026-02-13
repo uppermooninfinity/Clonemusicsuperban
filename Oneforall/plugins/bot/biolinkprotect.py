@@ -2,11 +2,10 @@ import re
 from pyrogram import filters
 from pyrogram.types import Message
 from Oneforall import app
-from config import OWNER_ID
+from config import OWNER_ID, BIO_LOG_CHANNEL
 
-# Detect links and usernames in bio
+# Detect links in bio
 LINK_REGEX = r"(https?://\S+|t\.me/\S+|@\w+)"
-
 FLAGGED_USERS = set()
 WHITELISTED_USERS = set()
 
@@ -28,14 +27,15 @@ async def check_bio_on_join(_, message: Message):
         if re.search(LINK_REGEX, bio, re.IGNORECASE):
             FLAGGED_USERS.add(member.id)
 
-            await message.reply_text(
-                f"🚨 **Infinity Security Alert** 🚨\n\n"
+            # Send log to channel
+            await app.send_message(
+                BIO_LOG_CHANNEL,
+                f"🚨 **Bio Link Detected**\n\n"
                 f"👤 User: {member.mention}\n"
-                f"🔎 Suspicious link detected in bio.\n\n"
-                f"⚠ User is now restricted from messaging.\n"
-                f"Admins may use:\n"
-                f"`/whitelist user_id`",
-                parse_mode="markdown"
+                f"🆔 ID: `{member.id}`\n"
+                f"💬 Chat: {message.chat.title}\n"
+                f"📌 Bio:\n`{bio}`\n\n"
+                f"⚠ User flagged for monitoring."
             )
 
 
@@ -49,15 +49,19 @@ async def monitor_flagged_users(_, message: Message):
 
     if user.id in FLAGGED_USERS and user.id not in WHITELISTED_USERS:
         try:
+            deleted_text = message.text
             await message.delete()
         except:
             return
 
-        await message.reply_text(
-            f"💎 **Bio Link Protection Triggered** 💎\n\n"
-            f"👤 {user.mention}'s message was removed.\n"
-            f"🔒 Reason: Promotional link in bio.\n\n"
-            f"🛡 Admins can whitelist if trusted."
+        # Log deleted message
+        await app.send_message(
+            BIO_LOG_CHANNEL,
+            f"🗑 **Message Deleted (Bio Protection)**\n\n"
+            f"👤 User: {user.mention}\n"
+            f"🆔 ID: `{user.id}`\n"
+            f"💬 Chat: {message.chat.title}\n\n"
+            f"📨 Deleted Message:\n`{deleted_text}`"
         )
 
 
@@ -69,8 +73,8 @@ async def whitelist_user(_, message: Message):
     if not user:
         return
 
-    # Check admin or owner
     member = await app.get_chat_member(message.chat.id, user.id)
+
     if user.id != OWNER_ID and not member.privileges:
         return await message.reply_text("❌ Only admins can use this command.")
 
@@ -94,7 +98,15 @@ async def whitelist_user(_, message: Message):
     FLAGGED_USERS.discard(target_user.id)
 
     await message.reply_text(
-        f"✅ **User Whitelisted Successfully**\n\n"
-        f"👤 {target_user.mention} can now send messages.\n"
-        f"🛡 Protection lifted."
-  )
+        f"✅ {target_user.mention} has been whitelisted."
+    )
+
+    # Log whitelist action
+    await app.send_message(
+        BIO_LOG_CHANNEL,
+        f"✅ **User Whitelisted**\n\n"
+        f"👤 Target: {target_user.mention}\n"
+        f"🆔 ID: `{target_user.id}`\n"
+        f"👮 By: {user.mention}\n"
+        f"💬 Chat: {message.chat.title}"
+    )
