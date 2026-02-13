@@ -37,7 +37,7 @@
       "value": "7651303468",
       "required": true
     },
-    "STRING1": {
+    "STRING_SESSION": {
       "description": "A Pyrogram v2 String Session from @BRANDEDSTRINGSESSION_BOT on Telegram.",
       "value": "",
       "required": true
