@@ -77,7 +77,6 @@ def PlayWrapper(command):
                     photo=PLAYLIST_IMG_URL,
                     caption=_["playlist_1"],
                     reply_markup=InlineKeyboardMarkup(buttons),
-                    has_spoiler=true,
                 )
         if message.command[0][0] == "c":
             chat_id = await get_cmode(message.chat.id)
