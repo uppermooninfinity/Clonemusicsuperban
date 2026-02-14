@@ -59,6 +59,8 @@ async def help_com_group(client, message: Message, _):
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
 
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 @app.on_callback_query(filters.regex("^help_callback cbot$"))
 async def help_cbot_handler(_, query: CallbackQuery):
 
@@ -86,7 +88,13 @@ Example:
 ✨ Your personal music bot will be ready!
 ━━━━━━━━━━━━━━━━━━
 """
-    await query.message.edit_text(text)
+
+    # Inline button ke liye markup
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="ʙᴀᴄᴋ", callback_data=f"settingsback_helper")]]
+
+    # Message ko edit karo text ke saath aur button add karo
+    await query.message.edit_text(text, reply_markup=keyboard)
     await query.answer()
 
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
