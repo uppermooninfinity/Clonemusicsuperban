@@ -64,7 +64,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 @app.on_callback_query(filters.regex("^help_callback cbot$"))
 async def help_cbot_handler(_, query: CallbackQuery):
 
-    text = """
+    text = """<blockquote expandable>
 ━━━━━━━━━━━━━━━━━━
 🤖 ᴄʟᴏɴᴇ ʏᴏᴜʀ ᴏᴡɴ ᴍᴜsɪᴄ ʙᴏᴛ
 ━━━━━━━━━━━━━━━━━━
@@ -87,11 +87,12 @@ Example:
 ━━━━━━━━━━━━━━━━━━
 ✨ Your personal music bot will be ready!
 ━━━━━━━━━━━━━━━━━━
-"""
+</blockquote expandable>"""
 
     # Inline button ke liye markup
     keyboard = InlineKeyboardMarkup(
-        [[InlineKeyboardButton(text="ʙᴀᴄᴋ", callback_data=f"settingsback_helper")]]
+        [[InlineKeyboardButton(text="🚩ʙᴀᴄᴋ", callback_data=f"settingsback_helper")]]
+    )
 
     # Message ko edit karo text ke saath aur button add karo
     await query.message.edit_text(text, reply_markup=keyboard)
