@@ -64,13 +64,18 @@ async def inline_query_handler(client, query):
         try:
             return await client.answer_inline_query(query.id, results=answers)
         except:
-            return                        InlineKeyboardButton(
-                            text="ʏᴏᴜᴛᴜʙᴇ 🎄",
-                            url=link,
-                        )
-                    ],
+            return    
+            [
+                [
+                    InlineKeyboardButton(
+                        text="ʏᴏᴜᴛᴜʙᴇ 🎄",
+                        url=link
+                    )
                 ]
-            )
+            ]
+        )
+    )
+]
             searched_text = f"""
 ❄ <b>ᴛɪᴛʟᴇ :</b> <a href={link}>{title}</a>
 
