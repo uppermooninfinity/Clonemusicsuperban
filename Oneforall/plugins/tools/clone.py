@@ -29,7 +29,7 @@ from config import (
     SUPPORT_CHAT,
     CLONE_LOGGER,
 )
-from Oneforall.utils.player import init_pytgcalls
+from Oneforall.plugins.play.play import init_pytgcalls
 
 init_pytgcalls(us)
 
