@@ -39,7 +39,7 @@ async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     await message.react("❤")
      
-    accha = await m.reply_text(text=random.choice(EMOJIOS))
+    accha = await message.reply_text(text=random.choice(EMOJIOS))
     await asyncio.sleep(1.3)
     await accha.edit("🏓fairy..ᴍᴇᴇɴʏ..ᴍɪɴʏ..ᴍᴏᴇ✨")
     await asyncio.sleep(0.2)
@@ -50,7 +50,7 @@ async def start_pm(client, message: Message, _):
     await accha.delete()
 
         # Send a random sticker
-    umm = await m.reply_sticker(sticker=random.choice(STICKER))
+    umm = await message.reply_sticker(sticker=random.choice(STICKER))
     await asyncio.sleep(2)
     await umm.delete()
 
