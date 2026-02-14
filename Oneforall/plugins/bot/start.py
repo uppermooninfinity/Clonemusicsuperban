@@ -25,6 +25,12 @@ from Oneforall.utils.inline import help_pannel, private_panel, start_panel
 from strings import get_string
 from Oneforall.misc import SUDOERS
 
+STICKER = [
+    "CAACAgUAAxkBAAEQEGVpSR-TuCKHP8D69SvDAAH2Gn7QjXEAAtIEAAKP9uhXzLPwoqMKxuQ2BA",
+    "CAACAgUAAxkBAAEQEGVpSR-TuCKHP8D69SvDAAH2Gn7QjXEAAtIEAAKP9uhXzLPwoqMKxuQ2BA",
+    "CAACAgUAAxkBAAEQEGVpSR-TuCKHP8D69SvDAAH2Gn7QjXEAAtIEAAKP9uhXzLPwoqMKxuQ2BA",
+]
+
 EMOJIOS = ["🚩", "🥀", "🪄", "🩷", "⚡", "❤️‍🩹", "🩶", "🩵", "💜", "🕊"]
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
