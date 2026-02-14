@@ -38,20 +38,21 @@ EMOJIOS = ["🚩", "🥀", "🪄", "🩷", "⚡", "❤️‍🩹", "🩶", "🩵
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     await message.react("❤")
-        accha = await m.reply_text(text=random.choice(EMOJIOS))
-        await asyncio.sleep(1.3)
-        await accha.edit("🏓fairy..ᴍᴇᴇɴʏ..ᴍɪɴʏ..ᴍᴏᴇ✨")
-        await asyncio.sleep(0.2)
-        await accha.edit("__fairy..ᴍᴇᴇɴʏ ꨄ sтαятιиg.....__")
-        await asyncio.sleep(0.2)
-        await accha.edit("__ ꨄ︎ sтαятιиg..__")
-        await asyncio.sleep(0.2)
-        await accha.delete()
+     
+    accha = await m.reply_text(text=random.choice(EMOJIOS))
+    await asyncio.sleep(1.3)
+    await accha.edit("🏓fairy..ᴍᴇᴇɴʏ..ᴍɪɴʏ..ᴍᴏᴇ✨")
+    await asyncio.sleep(0.2)
+    await accha.edit("__fairy..ᴍᴇᴇɴʏ ꨄ sтαятιиg.....__")
+    await asyncio.sleep(0.2)
+    await accha.edit("__ ꨄ︎ sтαятιиg..__")
+    await asyncio.sleep(0.2)
+    await accha.delete()
 
         # Send a random sticker
-        umm = await m.reply_sticker(sticker=random.choice(STICKER))
-        await asyncio.sleep(2)
-        await umm.delete()
+    umm = await m.reply_sticker(sticker=random.choice(STICKER))
+    await asyncio.sleep(2)
+    await umm.delete()
 
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
