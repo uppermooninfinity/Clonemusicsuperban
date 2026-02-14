@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()  # ab .env ke variables load ho jayenge
 
 from Oneforall import app
-from Oneforall import userbot as us
+from Oneforall import userbot 
 from Oneforall.misc import SUDOERS
 from Oneforall.utils.decorators.language import language
 from Oneforall.utils.database.clonedb import (
@@ -20,7 +20,7 @@ from Oneforall.utils.database.clonedb import (
     has_user_cloned_any_bot,
     get_owner_id_from_db,
 )
-from Oneforall.utils.clone.player import play_music
+from Oneforall.plugins.play.play import play_music
 
 from config import (
     API_ID,
