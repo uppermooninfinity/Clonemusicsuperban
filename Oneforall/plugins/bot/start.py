@@ -25,27 +25,28 @@ from Oneforall.utils.inline import help_pannel, private_panel, start_panel
 from strings import get_string
 from Oneforall.misc import SUDOERS
 
+EMOJIOS = ["🚩", "🥀", "🪄", "🩷", "⚡", "❤️‍🩹", "🩶", "🩵", "💜", "🕊"]
+
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     await message.react("❤")
+        accha = await m.reply_text(text=random.choice(EMOJIOS))
+        await asyncio.sleep(1.3)
+        await accha.edit("🏓fairy..ᴍᴇᴇɴʏ..ᴍɪɴʏ..ᴍᴏᴇ✨")
+        await asyncio.sleep(0.2)
+        await accha.edit("__fairy..ᴍᴇᴇɴʏ ꨄ sтαятιиg.....__")
+        await asyncio.sleep(0.2)
+        await accha.edit("__ ꨄ︎ sтαятιиg..__")
+        await asyncio.sleep(0.2)
+        await accha.delete()
 
-    typing_message = await message.reply("<b>𝖣ɪɴɢ..𝖣ᴏɴɢ..❤️‍🔥</b>")
-    
-    
-    typing_text = "<b>𝖲ᴛᴀʀᴛɪɴɢ...❤️‍🔥</b>"
-    
-    for i in range(1, len(typing_text) + 1):  
-        try:
-            await typing_message.edit_text(typing_text[:i])
-            await asyncio.sleep(0.001)  
-        except Exception as e:
-            print(f"Error while editing message : {e}")  
+        # Send a random sticker
+        umm = await m.reply_sticker(sticker=random.choice(STICKER))
+        await asyncio.sleep(2)
+        await umm.delete()
 
-    await asyncio.sleep(2)  
-    await typing_message.delete()  
-    
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
