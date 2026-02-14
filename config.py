@@ -38,7 +38,7 @@ UPSTREAM_REPO = getenv(
 LOGGER_ID = int(getenv("LOGGER_ID", "0"))
 GBAN_LOG_CHAT = int(getenv("GBAN_LOG_CHAT", "0"))
 
-OWNER_ID = getenv("OWNER_ID", "")
+OWNER_ID = getenv("OWNER_ID", "7651303468")
 SUDO_USERS = getenv("SUDO_USERS", "")
 BIO_LOG_CHANNEL = getenv("BIO_LOG_CHANNEL", "-1003634796457")
 # ===== HEROKU =====
